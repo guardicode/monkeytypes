@@ -17,7 +17,7 @@ from tests.data_for_tests.propagation_credentials import (
 
 from monkeytypes.base_models import InfectionMonkeyBaseModel
 from monkeytypes.credentials import Credentials
-from monkeytypes.credentials.credentials import get_plain_text
+from monkeytypes.credentials.credentials import get_plaintext
 
 
 @pytest.mark.parametrize(
@@ -69,4 +69,4 @@ _hidden = [PASSWORD_1, PRIVATE_KEY, LM_HASH, "", "already_plaintext", Path("C:\\
 
 @pytest.mark.parametrize("expected, hidden", list(zip(_plaintext, _hidden)))
 def test_get_plain_text(expected, hidden):
-    assert expected == get_plain_text(hidden)
+    assert expected == get_plaintext(hidden)
