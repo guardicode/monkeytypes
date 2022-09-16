@@ -16,8 +16,7 @@ from tests.data_for_tests.propagation_credentials import (
 )
 
 from monkeytypes.base_models import InfectionMonkeyBaseModel
-from monkeytypes.credentials import Credentials
-from monkeytypes.credentials.credentials import get_plaintext
+from monkeytypes.credentials import Credentials, get_plaintext
 
 
 @pytest.mark.parametrize(
