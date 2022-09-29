@@ -8,3 +8,4 @@ from . import types
 from . import base_models
 
 
+from .port_status import PortStatus
