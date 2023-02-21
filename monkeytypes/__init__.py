@@ -8,4 +8,4 @@ from . import base_models
 
 
 
-from .hard_coded_exploiter_manifests import HARD_CODED_EXPLOITER_MANIFESTS
+from .hard_coded_manifests import HARD_CODED_EXPLOITER_MANIFESTS
