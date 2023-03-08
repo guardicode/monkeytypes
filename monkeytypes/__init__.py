@@ -9,4 +9,4 @@ from . import base_models
 
 
 from .hard_coded_manifests import HARD_CODED_EXPLOITER_MANIFESTS
-from .account_roles import AccountRoles
+from .account_role import AccountRole
