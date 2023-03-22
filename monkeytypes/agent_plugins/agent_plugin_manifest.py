@@ -1,5 +1,7 @@
 from typing import Callable, Mapping, Optional, Tuple, Type
 
+from pydantic import HttpUrl
+
 from monkeytypes import OperatingSystem
 from monkeytypes.agent_plugins import AgentPluginType
 from monkeytypes.base_models import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
@@ -38,7 +40,7 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     version: PluginVersion
     description: Optional[str]
     remediation_suggestion: Optional[str]
-    link_to_documentation: Optional[str]
+    link_to_documentation: Optional[HttpUrl]
     safe: bool = False
 
     class Config(InfectionMonkeyModelConfig):
