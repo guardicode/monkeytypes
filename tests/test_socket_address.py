@@ -1,6 +1,6 @@
 import pytest
 
-from monkeytypes.types import SocketAddress
+from monkeytypes import SocketAddress
 
 GOOD_IP = "192.168.1.1"
 BAD_IP = "192.168.1.999"

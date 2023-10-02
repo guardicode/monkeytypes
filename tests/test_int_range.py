@@ -1,6 +1,6 @@
 import pytest
 
-from monkeytypes.types import IntRange
+from monkeytypes import IntRange
 
 INPUTS = [(100, 200), (-200, 100)]
 

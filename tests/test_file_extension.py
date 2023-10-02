@@ -1,6 +1,6 @@
 import pytest
 
-from monkeytypes.types import FileExtension
+from monkeytypes import FileExtension
 
 
 @pytest.mark.parametrize(

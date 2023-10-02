@@ -3,7 +3,7 @@ from base64 import b64encode
 import pytest
 from pydantic.errors import BytesError
 
-from monkeytypes.types.b64_bytes import b64_bytes_validator
+from monkeytypes.b64_bytes import b64_bytes_validator
 
 BYTES = b"random bytes"
 

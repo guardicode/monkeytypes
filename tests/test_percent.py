@@ -1,7 +1,7 @@
 import pytest
 from pydantic import BaseModel
 
-from monkeytypes.types import Percent, PercentLimited
+from monkeytypes import Percent, PercentLimited
 
 
 class Model(BaseModel):
