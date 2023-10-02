@@ -42,7 +42,7 @@ exclude=[]
 paths = ["monkeytypes", "vulture_allowlist.py"]
 
 [tool.poetry]
-name = "monkeytypes"
+name = "monkey-types"
 version = "v0.1.0"
 description = "A collection of types and models used by Infection Monkey"
 authors = ["Mike Salvatore <mike.s.salvatore@gmail.com>"]
@@ -53,6 +53,7 @@ classifiers=[
 ]
 repository = "https://github.com/guardicode/monkeytypes"
 readme = "README.md"
+packages = [{include="monkeytypes"}]
 include = ["CHANGELOG.md", "README.md"]
 
 [tool.poetry.dependencies]
