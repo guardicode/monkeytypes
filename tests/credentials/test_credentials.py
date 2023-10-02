@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from pydantic import SecretBytes
 from pydantic.types import SecretStr
-from tests.data_for_tests.propagation_credentials import (
+from .propagation_credentials import (
     CREDENTIALS,
     CREDENTIALS_DICTS,
     LM_HASH,
