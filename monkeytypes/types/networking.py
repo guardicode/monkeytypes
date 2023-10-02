@@ -77,8 +77,6 @@ class SocketAddress(InfectionMonkeyBaseModel):
         :return: SocketAddress with the IP and port
         """
         ip, port = address_str.split(":")
-        if port is None:
-            raise ValueError("SocketAddress requires a port")
 
         return SocketAddress(ip=IPv4Address(ip), port=NetworkPort(port))
 
