@@ -5,7 +5,7 @@ from pydantic import ConstrainedStr, HttpUrl
 from semver import VersionInfo
 
 from monkeytypes import OperatingSystem
-from monkeytypes.agent_plugins import AgentPluginType
+from monkeytypes import AgentPluginType
 from monkeytypes.base_models import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
 
 
