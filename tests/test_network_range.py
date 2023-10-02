@@ -1,4 +1,4 @@
-from monkeytypes.network.network_range import NetworkRange
+from monkeytypes import NetworkRange
 
 
 def test_range_filtering():
