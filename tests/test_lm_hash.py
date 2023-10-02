@@ -1,14 +1,14 @@
 import pytest
 
-from monkeytypes.credentials import NTHash
+from monkeytypes import LMHash
 
 
 def test_construct_valid_nt_hash(valid_ntlm_hash):
     # This test will fail if an exception is raised
-    NTHash(nt_hash=valid_ntlm_hash)
+    LMHash(lm_hash=valid_ntlm_hash)
 
 
 def test_construct_invalid_nt_hash(invalid_ntlm_hashes):
     for invalid_hash in invalid_ntlm_hashes:
         with pytest.raises(ValueError):
-            NTHash(nt_hash=invalid_hash)
+            LMHash(lm_hash=invalid_hash)

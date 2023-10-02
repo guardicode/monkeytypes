@@ -4,6 +4,10 @@ from pathlib import Path
 import pytest
 from pydantic import SecretBytes
 from pydantic.types import SecretStr
+
+from monkeytypes import Credentials, get_plaintext
+from monkeytypes.base_models import InfectionMonkeyBaseModel
+
 from .propagation_credentials import (
     CREDENTIALS,
     CREDENTIALS_DICTS,
@@ -14,9 +18,6 @@ from .propagation_credentials import (
     PLAINTEXT_PRIVATE_KEY_1,
     PRIVATE_KEY_1,
 )
-
-from monkeytypes.base_models import InfectionMonkeyBaseModel
-from monkeytypes.credentials import Credentials, get_plaintext
 
 
 @pytest.mark.parametrize(

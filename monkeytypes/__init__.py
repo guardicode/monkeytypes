@@ -22,3 +22,15 @@ from .file_extension import FileExtension
 from .percent import Percent, PercentLimited, NonNegativeFloat
 from .b64_bytes import B64Bytes
 from .network_range import InvalidNetworkRangeError, NetworkRange, CidrRange, IpRange, SingleIpRange
+
+from .credentials.email_address import EmailAddress
+from .credentials.username import Username
+
+from .credentials.lm_hash import LMHash
+from .credentials.nt_hash import NTHash
+from .credentials.password import Password
+from .credentials.ssh_keypair import SSHKeypair
+
+from .credentials.encoding import get_plaintext, SecretEncodingConfig
+
+from .credentials.credentials import Credentials, CredentialsComponent, Identity, Secret

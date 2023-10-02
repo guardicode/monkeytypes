@@ -1,6 +1,6 @@
 import pytest
 
-from monkeytypes.credentials import EmailAddress
+from monkeytypes import EmailAddress
 
 
 @pytest.mark.parametrize("email_address", ["qwerty@gmail.com", "qwe$rty@yahoo.in", "a-b_c@x.y.com"])
