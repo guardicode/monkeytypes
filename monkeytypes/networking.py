@@ -5,7 +5,7 @@ from ipaddress import IPv4Address
 
 from pydantic import ConstrainedInt
 
-from monkeytypes.base_models import InfectionMonkeyBaseModel
+from monkeytypes import InfectionMonkeyBaseModel
 
 
 class NetworkProtocol(Enum):

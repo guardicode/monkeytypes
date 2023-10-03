@@ -1,6 +1,6 @@
 from pydantic import SecretStr
 
-from ..base_models import InfectionMonkeyBaseModel
+from .. import InfectionMonkeyBaseModel
 
 
 class Password(InfectionMonkeyBaseModel):

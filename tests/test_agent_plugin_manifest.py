@@ -3,9 +3,7 @@ from typing import Any, Dict
 
 import pytest
 
-from monkeytypes import OperatingSystem
-from monkeytypes.agent_plugin_manifest import AgentPluginManifest
-from monkeytypes.agent_plugin_type import AgentPluginType
+from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"

@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import SecretStr
 
-from ..base_models import InfectionMonkeyBaseModel
+from .. import InfectionMonkeyBaseModel
 
 
 class SSHKeypair(InfectionMonkeyBaseModel):
