@@ -5,8 +5,7 @@ import pytest
 from pydantic import SecretBytes
 from pydantic.types import SecretStr
 
-from monkeytypes import Credentials, get_plaintext
-from monkeytypes.base_models import InfectionMonkeyBaseModel
+from monkeytypes import Credentials, InfectionMonkeyBaseModel, get_plaintext
 
 from .propagation_credentials import (
     CREDENTIALS,

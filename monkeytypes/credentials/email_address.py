@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 
-from ..base_models import InfectionMonkeyBaseModel
+from .. import InfectionMonkeyBaseModel
 
 
 class EmailAddress(InfectionMonkeyBaseModel):

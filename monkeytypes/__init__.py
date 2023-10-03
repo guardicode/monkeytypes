@@ -2,7 +2,13 @@
 Used for a common things between agent and island
 """
 from .operating_system import OperatingSystem
-from . import base_models
+
+from .base_models import (
+    InfectionMonkeyBaseModel,
+    InfectionMonkeyModelConfig,
+    MutableInfectionMonkeyBaseModel,
+    MutableInfectionMonkeyModelConfig,
+)
 from .agent_plugin_type import AgentPluginType
 from .agent_plugin_manifest import PluginName, PluginVersion, AgentPluginManifest
 from .concurrency import BasicLock, Event, Lock, RLock

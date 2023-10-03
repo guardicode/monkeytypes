@@ -2,7 +2,7 @@ import re
 
 from pydantic import SecretStr, validator
 
-from ..base_models import InfectionMonkeyBaseModel
+from .. import InfectionMonkeyBaseModel
 from .validators import ntlm_hash_regex
 
 

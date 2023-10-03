@@ -1,4 +1,4 @@
-from ..base_models import InfectionMonkeyBaseModel
+from .. import InfectionMonkeyBaseModel
 
 
 class Username(InfectionMonkeyBaseModel):

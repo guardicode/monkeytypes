@@ -4,9 +4,12 @@ from typing import Callable, Mapping, Optional, Self, Tuple, Type
 from pydantic import ConstrainedStr, HttpUrl
 from semver import VersionInfo
 
-from monkeytypes import OperatingSystem
-from monkeytypes import AgentPluginType
-from monkeytypes.base_models import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
+from monkeytypes import (
+    AgentPluginType,
+    InfectionMonkeyBaseModel,
+    InfectionMonkeyModelConfig,
+    OperatingSystem,
+)
 
 
 class PluginName(ConstrainedStr):

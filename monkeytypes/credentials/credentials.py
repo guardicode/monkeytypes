@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Union
 
-from ..base_models import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
+from .. import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
 from . import EmailAddress, LMHash, NTHash, Password, SSHKeypair, Username
 from .encoding import SecretEncodingConfig
 
