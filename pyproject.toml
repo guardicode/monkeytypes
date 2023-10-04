@@ -58,7 +58,7 @@ include = ["CHANGELOG.md", "README.md"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pydantic = {version = "< 2.0.0", extras = ["email"]}
+pydantic = {extras = ["email"], version = "^2.4.2"}
 semver = "2.13.0"
 
 [tool.poetry.dev-dependencies]
