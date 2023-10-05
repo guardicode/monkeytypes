@@ -1,7 +1,9 @@
-from typing import Optional, Self
+from typing import Optional, Self, Any
 from collections.abc import Callable, Mapping
 
-from pydantic import StringConstraints, HttpUrl
+
+from pydantic_core import core_schema
+from pydantic import StringConstraints, HttpUrl, GetCoreSchemaHandler
 from semver import VersionInfo
 
 from monkeytypes import (
@@ -25,11 +27,15 @@ class PluginName(StringConstraints):
 
 class PluginVersion(VersionInfo):
     @classmethod
-    # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
-    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    def __get_validators__(cls):
-        """Return a list of validator methods for pydantic models."""
-        yield cls.from_str
+    def __get_pydantic_core_schema__(
+        cls,
+        source_type: Any,
+        handler: GetCoreSchemaHandler,
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls.from_str,
+            handler(source_type),
+        )
 
     @classmethod
     # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.

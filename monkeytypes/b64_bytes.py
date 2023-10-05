@@ -1,6 +1,7 @@
 from base64 import b64decode
 from typing import Any
-from collections.abc import Callable, Generator
+from pydantic_core import core_schema
+from pydantic import GetCoreSchemaHandler
 
 
 class BytesError(Exception):
@@ -18,15 +19,18 @@ def b64_bytes_validator(val: Any) -> bytes:
         try:
             return b64decode(val)
         except Exception as e:
-            new_error = BytesError()
-            new_error.msg_template = "Failed to decode b64 string to bytes"
-            raise new_error from e
+            raise BytesError("Failed to decode b64 string to bytes") from e
     raise BytesError()
 
 
 class B64Bytes(bytes):
     @classmethod
-    # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
-    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]:
-        yield b64_bytes_validator
+    def __get_pydantic_core_schema__(
+        cls,
+        source_type: Any,
+        handler: GetCoreSchemaHandler,
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            b64_bytes_validator,
+            handler(source_type),
+        )
