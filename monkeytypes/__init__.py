@@ -26,7 +26,7 @@ from .networking import (
 from .secrets import OTP, Token
 from .file_extension import FileExtension
 from .percent import Percent, PercentLimited, NonNegativeFloat
-from .b64_bytes import B64Bytes
+from .b64_bytes import B64Bytes, BytesError
 from .network_range import InvalidNetworkRangeError, NetworkRange, CidrRange, IpRange, SingleIpRange
 
 from .credentials.email_address import EmailAddress

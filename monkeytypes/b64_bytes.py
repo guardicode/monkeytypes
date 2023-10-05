@@ -2,7 +2,11 @@ from base64 import b64decode
 from typing import Any
 from collections.abc import Callable, Generator
 
-from pydantic import errors
+
+class BytesError(Exception):
+    """
+    Raised when an exception occurs while decoding base64 string to bytes
+    """
 
 
 def b64_bytes_validator(val: Any) -> bytes:
@@ -14,10 +18,10 @@ def b64_bytes_validator(val: Any) -> bytes:
         try:
             return b64decode(val)
         except Exception as e:
-            new_error = errors.BytesError()
+            new_error = BytesError()
             new_error.msg_template = "Failed to decode b64 string to bytes"
             raise new_error from e
-    raise errors.BytesError()
+    raise BytesError()
 
 
 class B64Bytes(bytes):
