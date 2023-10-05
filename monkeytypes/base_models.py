@@ -1,5 +1,5 @@
 import json
-from typing import Sequence
+from collections.abc import Sequence
 
 from pydantic import BaseModel, Extra, ValidationError
 
