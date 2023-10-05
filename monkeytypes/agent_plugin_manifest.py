@@ -1,5 +1,5 @@
 import re
-from typing import Callable, Mapping, Optional, Self, Type
+from typing import Callable, Mapping, Optional, Self
 
 from pydantic import ConstrainedStr, HttpUrl
 from semver import VersionInfo
@@ -82,4 +82,4 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     safe: bool = False
 
     class Config(InfectionMonkeyModelConfig):
-        json_encoders: Mapping[Type, Callable] = {PluginVersion: lambda v: str(v)}
+        json_encoders: Mapping[type, Callable] = {PluginVersion: lambda v: str(v)}
