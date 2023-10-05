@@ -23,5 +23,7 @@ class Credentials(InfectionMonkeyBaseModel):
     def __hash__(self) -> int:
         return hash((self.identity, self.secret))
 
+    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
     class Config(SecretEncodingConfig, InfectionMonkeyModelConfig):
         pass

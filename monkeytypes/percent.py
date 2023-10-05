@@ -19,6 +19,8 @@ class Percent(NonNegativeFloat):
         Percent._validate_range(v)
 
     @classmethod
+    # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
+    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
     def __get_validators__(cls):
         for v in super().__get_validators__():
             yield v
@@ -60,6 +62,8 @@ class PercentLimited(Percent):
         PercentLimited._validate_range(v)
 
     @classmethod
+    # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
+    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
     def __get_validators__(cls):
         for v in super().__get_validators__():
             yield v

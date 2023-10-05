@@ -26,11 +26,15 @@ class PluginName(ConstrainedStr):
 
 class PluginVersion(VersionInfo):
     @classmethod
+    # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
+    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
     def __get_validators__(cls):
         """Return a list of validator methods for pydantic models."""
         yield cls.from_str
 
     @classmethod
+    # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
+    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
     def __modify_schema__(cls, field_schema):
         """Inject/mutate the pydantic field schema in-place."""
         field_schema.update(
@@ -82,5 +86,7 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     link_to_documentation: Optional[HttpUrl] = None
     safe: bool = False
 
+    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
     class Config(InfectionMonkeyModelConfig):
         json_encoders: Mapping[type, Callable] = {PluginVersion: lambda v: str(v)}
