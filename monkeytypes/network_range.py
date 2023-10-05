@@ -5,7 +5,7 @@ import re
 import socket
 import struct
 from abc import ABCMeta, abstractmethod
-from typing import Iterable, Tuple
+from typing import Iterable
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +106,7 @@ class NetworkRange(object, metaclass=ABCMeta):
         return False
 
     @staticmethod
-    def _range_to_ips(ip_range: str) -> Tuple[str, str]:
+    def _range_to_ips(ip_range: str) -> tuple[str, str]:
         ips = ip_range.split("-")
         ips = [ip.strip() for ip in ips]
         ips = sorted(ips, key=lambda ip: socket.inet_aton(ip))
