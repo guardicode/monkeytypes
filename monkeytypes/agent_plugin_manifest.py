@@ -1,8 +1,7 @@
-import re
 from typing import Optional, Self
 from collections.abc import Callable, Mapping
 
-from pydantic import ConstrainedStr, HttpUrl
+from pydantic import StringConstraints, HttpUrl
 from semver import VersionInfo
 
 from monkeytypes import (
@@ -13,7 +12,7 @@ from monkeytypes import (
 )
 
 
-class PluginName(ConstrainedStr):
+class PluginName(StringConstraints):
     """
     A plugin name
 
@@ -21,7 +20,7 @@ class PluginName(ConstrainedStr):
     """
 
     strip_whitespace = True
-    regex = re.compile("^[a-zA-Z0-9_]+$")
+    regex = "^[a-zA-Z0-9_]+$"
 
 
 class PluginVersion(VersionInfo):
