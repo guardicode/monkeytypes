@@ -5,7 +5,7 @@ import re
 import socket
 import struct
 from abc import ABCMeta, abstractmethod
-from typing import Iterable, List, Tuple
+from typing import Iterable, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +64,7 @@ class NetworkRange(object, metaclass=ABCMeta):
         return SingleIpRange(ip_address=address_str)
 
     @staticmethod
-    def filter_invalid_ranges(ranges: Iterable[str], error_msg: str) -> List[str]:
+    def filter_invalid_ranges(ranges: Iterable[str], error_msg: str) -> list[str]:
         valid_ranges = []
         for target_range in ranges:
             try:
