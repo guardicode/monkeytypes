@@ -1,5 +1,5 @@
 import re
-from typing import Callable, Mapping, Optional, Self, Tuple, Type
+from typing import Callable, Mapping, Optional, Self, Type
 
 from pydantic import ConstrainedStr, HttpUrl
 from semver import VersionInfo
@@ -66,11 +66,11 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
 
     name: PluginName
     plugin_type: AgentPluginType
-    supported_operating_systems: Tuple[OperatingSystem, ...] = (
+    supported_operating_systems: tuple[OperatingSystem, ...] = (
         OperatingSystem.WINDOWS,
         OperatingSystem.LINUX,
     )
-    target_operating_systems: Tuple[OperatingSystem, ...] = (
+    target_operating_systems: tuple[OperatingSystem, ...] = (
         OperatingSystem.WINDOWS,
         OperatingSystem.LINUX,
     )
