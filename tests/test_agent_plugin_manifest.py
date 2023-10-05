@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 
@@ -13,7 +13,7 @@ FAKE_SUPPORTED_OPERATING_SYSTEMS = ["linux", "windows"]
 FAKE_TITLE = "Remote Desktop Protocol exploiter"
 URL = "http://www.beefface.com"
 
-FAKE_AGENT_MANIFEST_DICT_IN: Dict[str, Any] = {
+FAKE_AGENT_MANIFEST_DICT_IN: dict[str, Any] = {
     "name": FAKE_NAME,
     "plugin_type": FAKE_TYPE,
     "supported_operating_systems": FAKE_SUPPORTED_OPERATING_SYSTEMS,
@@ -23,7 +23,7 @@ FAKE_AGENT_MANIFEST_DICT_IN: Dict[str, Any] = {
     "link_to_documentation": URL,
 }
 
-FAKE_AGENT_MANIFEST_DICT_OUT: Dict[str, Any] = copy.deepcopy(FAKE_AGENT_MANIFEST_DICT_IN)
+FAKE_AGENT_MANIFEST_DICT_OUT: dict[str, Any] = copy.deepcopy(FAKE_AGENT_MANIFEST_DICT_IN)
 FAKE_AGENT_MANIFEST_DICT_OUT["description"] = None
 FAKE_AGENT_MANIFEST_DICT_OUT["safe"] = False
 FAKE_AGENT_MANIFEST_DICT_OUT["remediation_suggestion"] = None
