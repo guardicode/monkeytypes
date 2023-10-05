@@ -1,25 +1,16 @@
 import json
 from collections.abc import Sequence
 
-from pydantic import BaseModel, Extra, ValidationError
+from pydantic import BaseModel, ValidationError, ConfigDict
 
 
-class InfectionMonkeyModelConfig:
-    allow_mutation = False
-    underscore_attrs_are_private = True
-    extra = Extra.forbid
+InfectionMonkeyModelConfig = ConfigDict(frozen=True, extra="forbid")
 
-
-class MutableInfectionMonkeyModelConfig(InfectionMonkeyModelConfig):
-    allow_mutation = True
-    validate_assignment = True
+MutableInfectionMonkeyModelConfig = ConfigDict(froze=False, validate_assignment=True)
 
 
 class InfectionMonkeyBaseModel(BaseModel):
-    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
-    class Config(InfectionMonkeyModelConfig):
-        pass
+    model_config = InfectionMonkeyModelConfig
 
     def __init__(self, **kwargs):
         try:
@@ -59,7 +50,4 @@ class InfectionMonkeyBaseModel(BaseModel):
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
-    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
-    class Config(MutableInfectionMonkeyModelConfig):
-        pass
+    model_config = MutableInfectionMonkeyModelConfig

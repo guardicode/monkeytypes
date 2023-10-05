@@ -1,15 +1,13 @@
 from typing import Optional, Self, Any
-from collections.abc import Callable, Mapping
 
 
 from pydantic_core import core_schema
-from pydantic import StringConstraints, HttpUrl, GetCoreSchemaHandler
+from pydantic import StringConstraints, HttpUrl, GetCoreSchemaHandler, ConfigDict
 from semver import VersionInfo
 
 from monkeytypes import (
     AgentPluginType,
     InfectionMonkeyBaseModel,
-    InfectionMonkeyModelConfig,
     OperatingSystem,
 )
 
@@ -34,7 +32,7 @@ class PluginVersion(VersionInfo):
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(
             cls.from_str,
-            handler(source_type),
+            handler(str),
         )
 
     @classmethod
@@ -74,6 +72,9 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
          disrupt the regular activities of the servers or the network, then the plugin is not safe.
     """
 
+    # This updates the config dict that we inherit from InfectionMonkeyBaseModel
+    model_config = ConfigDict(json_encoders={PluginVersion: lambda v: str(v)})
+
     name: PluginName
     plugin_type: AgentPluginType
     supported_operating_systems: tuple[OperatingSystem, ...] = (
@@ -90,8 +91,3 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     remediation_suggestion: Optional[str] = None
     link_to_documentation: Optional[HttpUrl] = None
     safe: bool = False
-
-    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
-    class Config(InfectionMonkeyModelConfig):
-        json_encoders: Mapping[type, Callable] = {PluginVersion: lambda v: str(v)}

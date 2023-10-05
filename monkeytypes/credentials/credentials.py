@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Union
 
-from .. import InfectionMonkeyBaseModel, InfectionMonkeyModelConfig
+from .. import InfectionMonkeyBaseModel
 from . import EmailAddress, LMHash, NTHash, Password, SSHKeypair, Username
 from .encoding import SecretEncodingConfig
 
@@ -14,6 +14,8 @@ CredentialsComponent = Union[Identity, Secret]
 class Credentials(InfectionMonkeyBaseModel):
     """Represents a credential pair (an identity and a secret)"""
 
+    model_config = SecretEncodingConfig
+
     identity: Optional[Identity]
     """Identity part of credentials, like a username or an email"""
 
@@ -22,8 +24,3 @@ class Credentials(InfectionMonkeyBaseModel):
 
     def __hash__(self) -> int:
         return hash((self.identity, self.secret))
-
-    # TODO[pydantic]: The `Config` class inherits from another class, please create the `model_config` manually.
-    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
-    class Config(SecretEncodingConfig, InfectionMonkeyModelConfig):
-        pass
