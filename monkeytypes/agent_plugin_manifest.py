@@ -2,7 +2,14 @@ from typing import Optional, Self, Any
 
 
 from pydantic_core import core_schema
-from pydantic import StringConstraints, HttpUrl, GetCoreSchemaHandler, ConfigDict
+from pydantic import (
+    StringConstraints,
+    HttpUrl,
+    GetCoreSchemaHandler,
+    GetJsonSchemaHandler,
+    ConfigDict,
+)
+from pydantic.json_schema import JsonSchemaValue
 from semver import VersionInfo
 
 from monkeytypes import (
@@ -36,17 +43,17 @@ class PluginVersion(VersionInfo):
         )
 
     @classmethod
-    # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
-    # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    def __modify_schema__(cls, field_schema):
-        """Inject/mutate the pydantic field schema in-place."""
-        field_schema.update(
-            examples=[
-                "1.0.2",
-                "2.15.3-alpha",
-                "21.3.15-beta+12345",
-            ]
-        )
+    def __get_pydantic_json_schema__(
+        cls, core_schema: core_schema.CoreSchema, handler: GetJsonSchemaHandler
+    ) -> JsonSchemaValue:
+        json_schema = handler(core_schema)
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema["examples"] = [
+            "1.0.2",
+            "2.15.3-alpha",
+            "21.3.15-beta+12345",
+        ]
+        return json_schema
 
     @classmethod
     def from_str(cls, version: str) -> Self:
