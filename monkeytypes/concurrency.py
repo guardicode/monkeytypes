@@ -1,5 +1,5 @@
 from types import TracebackType
-from typing import Optional, Protocol, Type
+from typing import Optional, Protocol
 
 
 class BasicLock(Protocol):
@@ -8,7 +8,7 @@ class BasicLock(Protocol):
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ) -> Optional[bool]:
