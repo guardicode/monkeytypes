@@ -2,7 +2,7 @@ from base64 import b64encode
 
 import pytest
 
-from monkeytypes.b64_bytes import b64_bytes_validator, BytesError
+from monkeytypes.b64_bytes import b64_bytes_validator
 
 BYTES = b"random bytes"
 
@@ -25,12 +25,12 @@ def test_b64_bytes_validator__b64_string():
 def test_64_bytes_validator__bad_b64():
     malformed_b64_string = "abc"
 
-    with pytest.raises(BytesError):
+    with pytest.raises(ValueError):
         b64_bytes_validator(malformed_b64_string)
 
 
 def test_64_bytes_validator__not_bytes():
     bad_input = 134567
 
-    with pytest.raises(BytesError):
+    with pytest.raises(ValueError):
         b64_bytes_validator(bad_input)

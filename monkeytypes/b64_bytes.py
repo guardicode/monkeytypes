@@ -4,12 +4,6 @@ from pydantic_core import core_schema
 from pydantic import GetCoreSchemaHandler
 
 
-class BytesError(Exception):
-    """
-    Raised when an exception occurs while decoding base64 string to bytes
-    """
-
-
 def b64_bytes_validator(val: Any) -> bytes:
     if isinstance(val, bytes):
         return val
@@ -19,8 +13,8 @@ def b64_bytes_validator(val: Any) -> bytes:
         try:
             return b64decode(val)
         except Exception as e:
-            raise BytesError("Failed to decode b64 string to bytes") from e
-    raise BytesError()
+            raise ValueError("Failed to decode b64 string to bytes") from e
+    raise ValueError()
 
 
 class B64Bytes(bytes):
