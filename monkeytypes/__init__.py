@@ -9,6 +9,7 @@ from .base_models import (
     MutableInfectionMonkeyBaseModel,
     MutableInfectionMonkeyModelConfig,
 )
+from .errors import IllegalMutationError
 from .agent_plugin_type import AgentPluginType
 from .agent_plugin_manifest import PluginName, PluginVersion, AgentPluginManifest
 from .concurrency import BasicLock, Event, Lock, RLock
@@ -37,6 +38,6 @@ from .credentials.nt_hash import NTHash
 from .credentials.password import Password
 from .credentials.ssh_keypair import SSHKeypair
 
-from .credentials.encoding import get_plaintext, SecretEncodingConfig
+from .credentials.encoding import get_plaintext
 
 from .credentials.credentials import Credentials, CredentialsComponent, Identity, Secret

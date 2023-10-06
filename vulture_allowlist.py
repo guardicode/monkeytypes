@@ -32,7 +32,6 @@ from monkeytypes import (
     PluginName,
     PortStatus,
     RLock,
-    SecretEncodingConfig,
     SingleIpRange,
     SocketAddress,
     Token,
@@ -96,7 +95,6 @@ Event.timeout
 CredentialsComponent
 Credentials
 Credentials.Config
-SecretEncodingConfig.json_encoders
 LMHash.validate_hash_format
 NTHash.validate_hash_format
 
