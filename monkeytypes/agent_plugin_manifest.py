@@ -1,5 +1,5 @@
 from typing import Optional, Self, Any
-
+from typing_extensions import Annotated
 
 from pydantic_core import core_schema
 from pydantic import (
@@ -18,16 +18,15 @@ from monkeytypes import (
     OperatingSystem,
 )
 
+"""
+A plugin name
 
-class PluginName(StringConstraints):
-    """
-    A plugin name
-
-    Allowed characters are alphanumerics and underscore.
-    """
-
-    strip_whitespace = True
-    regex = "^[a-zA-Z0-9_]+$"
+Allowed characters are alphanumerics and underscore.
+"""
+PluginName = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, pattern=r"^[a-zA-Z0-9_]+$"),
+]
 
 
 class PluginVersion(VersionInfo):
@@ -94,7 +93,7 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     )
     title: Optional[str]
     version: PluginVersion
-    description: Optional[str]
+    description: Optional[str] = None
     remediation_suggestion: Optional[str] = None
     link_to_documentation: Optional[HttpUrl] = None
     safe: bool = False

@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem
+from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem, PluginName
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"
@@ -11,7 +11,7 @@ FAKE_TYPE = "Exploiter"
 FAKE_OPERATING_SYSTEMS = ["linux"]
 FAKE_SUPPORTED_OPERATING_SYSTEMS = ["linux", "windows"]
 FAKE_TITLE = "Remote Desktop Protocol exploiter"
-URL = "http://www.beefface.com"
+URL = "http://www.beefface.com/"
 
 FAKE_AGENT_MANIFEST_DICT_IN: dict[str, Any] = {
     "name": FAKE_NAME,
@@ -50,7 +50,7 @@ FAKE_MANIFEST_OBJECT = AgentPluginManifest(
 
 
 def test_agent_plugin_manifest__serialization():
-    assert FAKE_MANIFEST_OBJECT.dict(simplify=True) == FAKE_AGENT_MANIFEST_DICT_OUT
+    assert FAKE_MANIFEST_OBJECT.model_dump(mode="json") == FAKE_AGENT_MANIFEST_DICT_OUT
 
 
 def test_agent_plugin_manifest__deserialization():
