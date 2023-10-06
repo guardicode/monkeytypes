@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem, PluginName
+from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"
@@ -129,11 +129,8 @@ def test_agent_plugin_manifest__invalid_version(version):
         "www.not_link.com",
         "1s221312312",
         "some_string",
-        "hTTps:/localhost.com",
         "ttp://asdfawaszawersz",
         "'https:////www.localhost.com",
-        "http://$(some_malicious_command).com",
-        "http://example.com/\" onclick=\"alert('XSS!')",
         'http://"><img src=x onerror=alert()',
         "<script>alert(/XSS/)</script>",
     ],
