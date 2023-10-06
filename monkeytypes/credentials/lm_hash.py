@@ -1,6 +1,6 @@
 import re
 
-from pydantic import field_validator, SecretStr
+from pydantic import field_validator, SecretStr, field_serializer
 
 from .. import InfectionMonkeyBaseModel
 from .validators import ntlm_hash_regex
@@ -18,3 +18,7 @@ class LMHash(InfectionMonkeyBaseModel):
         if not re.match(ntlm_hash_regex, lm_hash.get_secret_value()):
             raise ValueError("Invalid LM hash provided")
         return lm_hash
+
+    @field_serializer("lm_hash", when_used="json")
+    def dump_secret(self, v):
+        return v.get_secret_value()
