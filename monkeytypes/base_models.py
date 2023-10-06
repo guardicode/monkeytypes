@@ -1,4 +1,3 @@
-import json
 from collections.abc import Sequence
 
 from pydantic import BaseModel, ValidationError, ConfigDict
@@ -32,21 +31,6 @@ class InfectionMonkeyBaseModel(BaseModel):
             if hasattr(e, "_loc"):
                 error.args = (f"{e._loc} {error}",)
             raise error
-
-    # We need to be able to convert our models to fully simplified dictionaries. The
-    # `BaseModel.dict()` does not support this. There is a proposal to add a `simplify` keyword
-    # argument to `dict()` to support this. See
-    # https://github.com/pydantic/pydantic/issues/951#issuecomment-552463606. The hope is that we
-    # can override `dict()` with an implementation of `simplify` and remove it when the feature gets
-    # merged. If the feature doesn't get merged, or the interface is changed, this function can
-    # continue to serve as a wrapper until we can update all references to it.
-    def dict(self, simplify=False, **kwargs):
-        if simplify:
-            # Allow keyword arguments to be passed to `json()`
-            # We can pass kwargs to `json()` because the parameters of BaseModel.json() are a
-            # superset of those of BaseModel.dict().
-            return json.loads(self.json(**kwargs))
-        return BaseModel.dict(self, **kwargs)
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
