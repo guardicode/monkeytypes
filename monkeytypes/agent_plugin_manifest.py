@@ -1,5 +1,6 @@
 import re
-from typing import Callable, Mapping, Optional, Self
+from typing import Callable, Optional, Self
+from collections.abc import Mapping
 
 from pydantic import ConstrainedStr, HttpUrl
 from semver import VersionInfo
