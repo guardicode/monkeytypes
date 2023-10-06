@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem
+from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem, IllegalMutationError
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"
@@ -156,3 +156,8 @@ def test_agent_plugin_manifest__remediation_suggestion():
     agent_manifest_object = AgentPluginManifest(**agent_manifest_dict)
 
     assert agent_manifest_object.remediation_suggestion == remediation_suggestion
+
+
+def test_agent_plugin_manifest__illegal_mutation_error():
+    with pytest.raises(IllegalMutationError):
+        FAKE_MANIFEST_OBJECT.name = FAKE_NAME2

@@ -1,16 +1,10 @@
 import re
+from typing import Any
 from pydantic import BaseModel, ValidationError, ConfigDict
+from .errors import IllegalMutationError
 
 TYPE_ERROR_LIST = [r"\w+_type", "int_from_float", "is_instance_of", "is_subcass_of"]
 ILLEGAL_MUTATION_LIST = ["frozen_field", "frozen_instance"]
-
-
-class IllegalMutationError(RuntimeError):
-    """
-    Raised when an error occurs during illegal mutation of fields
-    """
-
-    pass
 
 
 InfectionMonkeyModelConfig = ConfigDict(frozen=True, extra="forbid")
@@ -35,10 +29,17 @@ class InfectionMonkeyBaseModel(BaseModel):
                 if re.match(pattern, e["type"]):
                     raise TypeError(e["msg"]) from err
 
-            if e["type"] in ILLEGAL_MUTATION_LIST:
-                raise IllegalMutationError(e["msh"]) from err
-
             raise ValueError(e["msg"]) from err
+
+    def __setattr__(self, name: str, value: Any):
+        try:
+            super().__setattr__(name, value)
+        except ValidationError as err:
+            e = err.errors()[0]
+            if e["type"] in ILLEGAL_MUTATION_LIST:
+                raise IllegalMutationError(e["msg"]) from err
+
+            raise err
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
