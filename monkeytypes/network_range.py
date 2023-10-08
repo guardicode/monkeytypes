@@ -5,7 +5,7 @@ import re
 import socket
 import struct
 from abc import ABCMeta, abstractmethod
-from typing import Iterable
+from collections.abc import Iterable
 
 logger = logging.getLogger(__name__)
 
