@@ -1,5 +1,6 @@
 from base64 import b64decode
-from typing import Any, Callable, Generator
+from typing import Any, Generator
+from collections.abc import Callable
 
 from pydantic import errors
 
