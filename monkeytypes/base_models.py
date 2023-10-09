@@ -19,6 +19,8 @@ class InfectionMonkeyBaseModel(BaseModel):
         try:
             super().__init__(**kwargs)
         except ValidationError as err:
+            # TLDR: This exception handler allows users of this class to be decoupled from pydantic.
+            #
             # From version 2, Pydantic doesn't offer any way to decouple from ValidationError
             # but it offers certain type names from which we can choose what errors should we
             # raise to decouple from ValidationError.
