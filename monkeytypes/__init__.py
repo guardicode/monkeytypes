@@ -8,8 +8,8 @@ from .base_models import (
     InfectionMonkeyModelConfig,
     MutableInfectionMonkeyBaseModel,
     MutableInfectionMonkeyModelConfig,
+    IllegalMutationError,
 )
-from .errors import IllegalMutationError
 from .agent_plugin_type import AgentPluginType
 from .agent_plugin_manifest import PluginName, PluginVersion, AgentPluginManifest
 from .concurrency import BasicLock, Event, Lock, RLock
