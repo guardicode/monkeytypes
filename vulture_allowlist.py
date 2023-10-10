@@ -20,7 +20,6 @@ from monkeytypes import (
     Lock,
     MachineID,
     MutableInfectionMonkeyBaseModel,
-    NetworkPort,
     NetworkProtocol,
     NetworkRange,
     NetworkService,
@@ -28,7 +27,6 @@ from monkeytypes import (
     Password,
     Percent,
     PercentLimited,
-    PluginName,
     PortStatus,
     RLock,
     SingleIpRange,
@@ -37,9 +35,6 @@ from monkeytypes import (
     Token,
 )
 from monkeytypes.base64_bytes import b64_bytes_validator
-
-PluginName.strip_whitespace
-PluginName.regex
 
 AgentPluginManifest
 AgentPluginManifest.name
@@ -121,9 +116,6 @@ NetworkService.SMB
 NetworkService.SSH
 NetworkService.MSSQL_BROWSER
 NetworkService.UNKNOWN
-
-NetworkPort.ge
-NetworkPort.le
 
 PortStatus
 PortStatus.OPEN
