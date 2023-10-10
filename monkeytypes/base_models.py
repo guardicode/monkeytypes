@@ -1,5 +1,6 @@
 import re
 from typing import Any
+
 from pydantic import BaseModel, ValidationError
 
 TYPE_ERROR_LIST = [r"\w+_type", "int_from_float", "is_instance_of", "is_subcass_of"]
@@ -32,6 +33,13 @@ class InfectionMonkeyBaseModel(BaseModel):
             super().__init__(**kwargs)
         except ValidationError as err:
             # TLDR: This exception handler allows users of this class to be decoupled from pydantic.
+            #
+            # When validation of a pydantic object fails, pydantic raises a `ValidationError`, which
+            # is-a `ValueError`, even if the real cause was a `TypeError`. Furthermore, allowing
+            # `pydantic.ValidationError` to be raised would couple other modules to pydantic, which
+            # is undesirable. This exception handler re-raises the first validation error taht
+            # pydantic encountered, allowing users of these models to `except` `TypeError` or
+            # `ValueError` as appropriate.
             #
             # From version 2, Pydantic doesn't offer any way to decouple from ValidationError
             # but it offers certain type names from which we can choose what errors should we
