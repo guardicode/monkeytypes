@@ -13,7 +13,6 @@ from monkeytypes import (
     FileExtension,
     HardwareID,
     InfectionMonkeyBaseModel,
-    InfectionMonkeyModelConfig,
     IntRange,
     IpRange,
     JSONSerializable,
@@ -21,12 +20,12 @@ from monkeytypes import (
     Lock,
     MachineID,
     MutableInfectionMonkeyBaseModel,
-    MutableInfectionMonkeyModelConfig,
     NetworkPort,
     NetworkProtocol,
     NetworkRange,
     NetworkService,
     NTHash,
+    Password,
     Percent,
     PercentLimited,
     PluginName,
@@ -34,6 +33,7 @@ from monkeytypes import (
     RLock,
     SingleIpRange,
     SocketAddress,
+    SSHKeypair,
     Token,
 )
 from monkeytypes.base64_bytes import b64_bytes_validator
@@ -52,8 +52,7 @@ AgentPluginManifest.remediation_suggestion
 AgentPluginManifest.link_to_documentation
 AgentPluginManifest.safe
 
-AgentPluginManifest.Config
-AgentPluginManifest.Config.json_encoders
+AgentPluginManifest.version_serialize
 
 AgentPluginType.CREDENTIALS_COLLECTOR
 AgentPluginType.EXPLOITER
@@ -63,15 +62,8 @@ AgentPluginType.PAYLOAD
 B64Bytes
 b64_bytes_validator.msg_template
 
-InfectionMonkeyModelConfig.allow_mutation
-InfectionMonkeyModelConfig.underscore_attrs_are_private
-InfectionMonkeyModelConfig.extra
-MutableInfectionMonkeyModelConfig.allow_mutation
-MutableInfectionMonkeyModelConfig.validate_assignment
-InfectionMonkeyBaseModel.Config
-InfectionMonkeyBaseModel.args
-MutableInfectionMonkeyBaseModel
-MutableInfectionMonkeyBaseModel.Config
+InfectionMonkeyBaseModel.model_config
+MutableInfectionMonkeyBaseModel.model_config
 
 BasicLock.exc_type
 BasicLock.exc_val
@@ -93,10 +85,13 @@ Event.wait
 Event.timeout
 
 CredentialsComponent
-Credentials
-Credentials.Config
+Credentials.serialize
+LMHash.dump_secret
 LMHash.validate_hash_format
+NTHash.dump_secret
 NTHash.validate_hash_format
+Password.dump_secret
+SSHKeypair.dump_secret
 
 FileExtension
 
