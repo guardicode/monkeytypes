@@ -7,7 +7,7 @@ from pydantic import (
     HttpUrl,
     GetCoreSchemaHandler,
     GetJsonSchemaHandler,
-    ConfigDict,
+    field_serializer,
 )
 from pydantic.json_schema import JsonSchemaValue
 from semver import VersionInfo
@@ -73,9 +73,6 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
          disrupt the regular activities of the servers or the network, then the plugin is not safe.
     """
 
-    # This updates the config dict that we inherit from InfectionMonkeyBaseModel
-    model_config = ConfigDict(json_encoders={PluginVersion: lambda v: str(v)})
-
     name: PluginName
     plugin_type: AgentPluginType
     supported_operating_systems: tuple[OperatingSystem, ...] = (
@@ -92,3 +89,7 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     remediation_suggestion: Optional[str] = None
     link_to_documentation: Optional[HttpUrl] = None
     safe: bool = False
+
+    @field_serializer("version", when_used="json")
+    def version_serialize(self, v):
+        return str(v)
