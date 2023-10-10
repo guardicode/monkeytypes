@@ -23,8 +23,8 @@ from .propagation_credentials import (
     "credentials, expected_credentials_dict", zip(CREDENTIALS, CREDENTIALS_DICTS)
 )
 def test_credentials_serialization_json(credentials, expected_credentials_dict):
-    serialized_credentials = credentials.model_dump_json()
-    deserialized_credentials = Credentials.model_validate_json(serialized_credentials)
+    serialized_credentials = credentials.model_dump(mode="json")
+    deserialized_credentials = Credentials.model_validate(serialized_credentials)
     assert credentials == deserialized_credentials
 
 
