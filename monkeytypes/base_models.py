@@ -1,7 +1,7 @@
 import re
 from typing import Any
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, ConfigDict, ValidationError
 
 TYPE_ERROR_LIST = [r"\w+_type", "int_from_float", "is_instance_of", "is_subcass_of"]
 ILLEGAL_MUTATION_LIST = ["frozen_field", "frozen_instance"]
@@ -16,13 +16,15 @@ class IllegalMutationError(RuntimeError):
     pass
 
 
-InfectionMonkeyModelConfig = {"frozen": True, "extra": "forbid"}
+InfectionMonkeyModelConfig = ConfigDict(frozen=True, extra="forbid")
 
-MutableInfectionMonkeyModelConfig = {
-    **InfectionMonkeyModelConfig,
-    "frozen": False,
-    "validate_assignment": True,
-}
+MutableInfectionMonkeyModelConfig = ConfigDict(
+    **{
+        **InfectionMonkeyModelConfig,
+        "frozen": False,
+        "validate_assignment": True,
+    }
+)
 
 
 class InfectionMonkeyBaseModel(BaseModel):
