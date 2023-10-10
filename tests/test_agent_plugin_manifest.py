@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem, IllegalMutationError
+from monkeytypes import AgentPluginManifest, AgentPluginType, IllegalMutationError, OperatingSystem
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"

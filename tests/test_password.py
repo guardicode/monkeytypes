@@ -1,4 +1,5 @@
 from pydantic import SecretStr
+
 from monkeytypes import Password
 
 PASSWORD = SecretStr("some_simple_password")

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from enum import Enum
 from ipaddress import IPv4Address
-from typing_extensions import Annotated
 
 from pydantic import Field
+from typing_extensions import Annotated
 
 from monkeytypes import InfectionMonkeyBaseModel
 

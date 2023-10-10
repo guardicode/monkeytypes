@@ -1,10 +1,12 @@
-import pytest
 from typing import Optional
+
+import pytest
+
 from monkeytypes import (
-    MutableInfectionMonkeyBaseModel,
-    MutableInfectionMonkeyModelConfig,
     InfectionMonkeyBaseModel,
     InfectionMonkeyModelConfig,
+    MutableInfectionMonkeyBaseModel,
+    MutableInfectionMonkeyModelConfig,
 )
 
 

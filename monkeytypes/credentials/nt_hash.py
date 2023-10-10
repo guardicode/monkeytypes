@@ -1,6 +1,6 @@
 import re
 
-from pydantic import field_validator, SecretStr, field_serializer
+from pydantic import SecretStr, field_serializer, field_validator
 
 from .. import InfectionMonkeyBaseModel
 from .validators import ntlm_hash_regex

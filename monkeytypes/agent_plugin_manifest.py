@@ -1,22 +1,18 @@
-from typing import Optional, Self, Any
-from typing_extensions import Annotated
+from typing import Any, Optional, Self
 
-from pydantic_core import core_schema
 from pydantic import (
-    StringConstraints,
-    HttpUrl,
     GetCoreSchemaHandler,
     GetJsonSchemaHandler,
+    HttpUrl,
+    StringConstraints,
     field_serializer,
 )
 from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import core_schema
 from semver import VersionInfo
+from typing_extensions import Annotated
 
-from monkeytypes import (
-    AgentPluginType,
-    InfectionMonkeyBaseModel,
-    OperatingSystem,
-)
+from monkeytypes import AgentPluginType, InfectionMonkeyBaseModel, OperatingSystem
 
 PluginName = Annotated[
     str,

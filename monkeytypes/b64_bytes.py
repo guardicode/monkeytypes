@@ -1,7 +1,8 @@
 from base64 import b64decode
 from typing import Any
-from pydantic_core import core_schema
+
 from pydantic import GetCoreSchemaHandler
+from pydantic_core import core_schema
 
 
 def b64_bytes_validator(val: Any) -> bytes:

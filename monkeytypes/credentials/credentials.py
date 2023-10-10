@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Optional, Union
 
+from pydantic import field_serializer
+
 from .. import InfectionMonkeyBaseModel
 from . import EmailAddress, LMHash, NTHash, Password, SSHKeypair, Username
 from .encoding import get_plaintext
-from pydantic import field_serializer
-
 
 Identity = Union[Username, EmailAddress]
 Secret = Union[Password, LMHash, NTHash, SSHKeypair]

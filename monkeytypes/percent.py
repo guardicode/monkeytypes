@@ -1,6 +1,8 @@
 from typing import Any, Self, TypeAlias
+
+from pydantic import GetCoreSchemaHandler
+from pydantic import NonNegativeFloat as PydanticNonNegativeFloat
 from pydantic_core import core_schema
-from pydantic import GetCoreSchemaHandler, NonNegativeFloat as PydanticNonNegativeFloat
 
 NonNegativeFloat: TypeAlias = PydanticNonNegativeFloat
 
