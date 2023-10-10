@@ -40,12 +40,6 @@ class NetworkService(Enum):
     UNKNOWN = "unknown"
 
 
-"""
-Define network port as constrainer integer.
-
-To define a default value with this type:
-    port: NetworkPort = typing.cast(NetworkPort, 1000)
-"""
 NetworkPort = Annotated[int, Field(ge=0, le=65535)]
 
 

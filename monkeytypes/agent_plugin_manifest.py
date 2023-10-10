@@ -18,11 +18,6 @@ from monkeytypes import (
     OperatingSystem,
 )
 
-"""
-A plugin name
-
-Allowed characters are alphanumerics and underscore.
-"""
 PluginName = Annotated[
     str,
     StringConstraints(strip_whitespace=True, pattern=r"^[a-zA-Z0-9_]+$"),
