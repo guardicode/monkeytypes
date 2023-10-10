@@ -49,7 +49,11 @@ class InfectionMonkeyBaseModel(BaseModel):
             if e["type"] in ILLEGAL_MUTATION_LIST:
                 raise IllegalMutationError(e["msg"]) from err
 
-            raise err
+            for pattern in TYPE_ERROR_LIST:
+                if re.match(pattern, e["type"]):
+                    raise TypeError(e["msg"]) from err
+
+            raise ValueError(e["msg"]) from err
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
