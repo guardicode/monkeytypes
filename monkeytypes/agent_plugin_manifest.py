@@ -1,4 +1,4 @@
-from typing import Any, Optional, Self
+from typing import Optional, Self
 
 from pydantic import (
     GetCoreSchemaHandler,
@@ -24,7 +24,7 @@ class PluginVersion(VersionInfo):
     @classmethod
     def __get_pydantic_core_schema__(
         cls,
-        source_type: Any,
+        _,
         handler: GetCoreSchemaHandler,
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(

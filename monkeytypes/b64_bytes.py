@@ -1,8 +1,8 @@
 from base64 import b64decode
 from typing import Any
 
-from pydantic import GetCoreSchemaHandler
-from pydantic_core import core_schema
+from pydantic import BeforeValidator
+from typing_extensions import Annotated
 
 
 def b64_bytes_validator(val: Any) -> bytes:
@@ -18,14 +18,4 @@ def b64_bytes_validator(val: Any) -> bytes:
     raise ValueError()
 
 
-class B64Bytes(bytes):
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls,
-        source_type: Any,
-        handler: GetCoreSchemaHandler,
-    ) -> core_schema.CoreSchema:
-        return core_schema.no_info_after_validator_function(
-            b64_bytes_validator,
-            handler(source_type),
-        )
+B64Bytes = Annotated[bytes, BeforeValidator(b64_bytes_validator)]

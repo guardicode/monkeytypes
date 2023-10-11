@@ -22,7 +22,7 @@ class Percent(NonNegativeFloat):
 
     @classmethod
     def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
+        cls, _, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(cls.validate, handler(NonNegativeFloat))
 
@@ -62,7 +62,7 @@ class PercentLimited(Percent):
 
     @classmethod
     def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
+        cls, _, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(
             cls.validate, handler.generate_schema(Percent)
