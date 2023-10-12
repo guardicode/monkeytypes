@@ -59,6 +59,11 @@ b64_bytes_validator.msg_template
 
 InfectionMonkeyBaseModel.model_config
 InfectionMonkeyBaseModel.to_json_dict
+InfectionMonkeyBaseModel.to_dict
+InfectionMonkeyBaseModel.to_json
+InfectionMonkeyBaseModel.from_json
+InfectionMonkeyBaseModel.copy
+InfectionMonkeyBaseModel.deep_copy
 MutableInfectionMonkeyBaseModel.model_config
 
 BasicLock.exc_type
