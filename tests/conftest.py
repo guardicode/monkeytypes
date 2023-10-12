@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Union
 
 import pytest
 
@@ -9,12 +9,18 @@ def valid_ntlm_hash() -> str:
 
 
 @pytest.fixture(scope="session")
-def invalid_ntlm_hashes() -> List[Union[str, int, float]]:
+def invalid_value_ntlm_hashes() -> list[str]:
+    return [
+        "invalid",
+        "0123456789012345678901234568901",
+        "E52GAC67419A9A224A3B108F3FA6CB6D",
+    ]
+
+
+@pytest.fixture(scope="session")
+def invalid_type_ntlm_hashes() -> list[Union[int, float]]:
     return [
         0,
         1,
         2.0,
-        "invalid",
-        "0123456789012345678901234568901",
-        "E52GAC67419A9A224A3B108F3FA6CB6D",
     ]

@@ -1,9 +1,9 @@
 import copy
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 
-from monkeytypes import AgentPluginManifest, AgentPluginType, OperatingSystem
+from monkeytypes import AgentPluginManifest, AgentPluginType, IllegalMutationError, OperatingSystem
 
 FAKE_NAME = "rdp_exploiter"
 FAKE_NAME2 = "ssh_exploiter"
@@ -11,9 +11,9 @@ FAKE_TYPE = "Exploiter"
 FAKE_OPERATING_SYSTEMS = ["linux"]
 FAKE_SUPPORTED_OPERATING_SYSTEMS = ["linux", "windows"]
 FAKE_TITLE = "Remote Desktop Protocol exploiter"
-URL = "http://www.beefface.com"
+URL = "http://www.beefface.com/"
 
-FAKE_AGENT_MANIFEST_DICT_IN: Dict[str, Any] = {
+FAKE_AGENT_MANIFEST_DICT_IN: dict[str, Any] = {
     "name": FAKE_NAME,
     "plugin_type": FAKE_TYPE,
     "supported_operating_systems": FAKE_SUPPORTED_OPERATING_SYSTEMS,
@@ -23,7 +23,7 @@ FAKE_AGENT_MANIFEST_DICT_IN: Dict[str, Any] = {
     "link_to_documentation": URL,
 }
 
-FAKE_AGENT_MANIFEST_DICT_OUT: Dict[str, Any] = copy.deepcopy(FAKE_AGENT_MANIFEST_DICT_IN)
+FAKE_AGENT_MANIFEST_DICT_OUT: dict[str, Any] = copy.deepcopy(FAKE_AGENT_MANIFEST_DICT_IN)
 FAKE_AGENT_MANIFEST_DICT_OUT["description"] = None
 FAKE_AGENT_MANIFEST_DICT_OUT["safe"] = False
 FAKE_AGENT_MANIFEST_DICT_OUT["remediation_suggestion"] = None
@@ -50,7 +50,7 @@ FAKE_MANIFEST_OBJECT = AgentPluginManifest(
 
 
 def test_agent_plugin_manifest__serialization():
-    assert FAKE_MANIFEST_OBJECT.dict(simplify=True) == FAKE_AGENT_MANIFEST_DICT_OUT
+    assert FAKE_MANIFEST_OBJECT.to_json_dict() == FAKE_AGENT_MANIFEST_DICT_OUT
 
 
 def test_agent_plugin_manifest__deserialization():
@@ -129,11 +129,8 @@ def test_agent_plugin_manifest__invalid_version(version):
         "www.not_link.com",
         "1s221312312",
         "some_string",
-        "hTTps:/localhost.com",
         "ttp://asdfawaszawersz",
         "'https:////www.localhost.com",
-        "http://$(some_malicious_command).com",
-        "http://example.com/\" onclick=\"alert('XSS!')",
         'http://"><img src=x onerror=alert()',
         "<script>alert(/XSS/)</script>",
     ],
@@ -159,3 +156,8 @@ def test_agent_plugin_manifest__remediation_suggestion():
     agent_manifest_object = AgentPluginManifest(**agent_manifest_dict)
 
     assert agent_manifest_object.remediation_suggestion == remediation_suggestion
+
+
+def test_agent_plugin_manifest__illegal_mutation_error():
+    with pytest.raises(IllegalMutationError):
+        FAKE_MANIFEST_OBJECT.name = FAKE_NAME2

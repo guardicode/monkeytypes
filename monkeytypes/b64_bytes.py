@@ -1,7 +1,8 @@
 from base64 import b64decode
-from typing import Any, Callable, Generator
+from typing import Any
 
-from pydantic import errors
+from pydantic import BeforeValidator
+from typing_extensions import Annotated
 
 
 def b64_bytes_validator(val: Any) -> bytes:
@@ -13,13 +14,8 @@ def b64_bytes_validator(val: Any) -> bytes:
         try:
             return b64decode(val)
         except Exception as e:
-            new_error = errors.BytesError()
-            new_error.msg_template = "Failed to decode b64 string to bytes"
-            raise new_error from e
-    raise errors.BytesError()
+            raise ValueError("Failed to decode b64 string to bytes") from e
+    raise ValueError()
 
 
-class B64Bytes(bytes):
-    @classmethod
-    def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]:
-        yield b64_bytes_validator
+B64Bytes = Annotated[bytes, BeforeValidator(b64_bytes_validator)]

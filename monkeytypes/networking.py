@@ -3,7 +3,8 @@ from __future__ import annotations
 from enum import Enum
 from ipaddress import IPv4Address
 
-from pydantic import ConstrainedInt
+from pydantic import Field
+from typing_extensions import Annotated
 
 from monkeytypes import InfectionMonkeyBaseModel
 
@@ -39,16 +40,7 @@ class NetworkService(Enum):
     UNKNOWN = "unknown"
 
 
-class NetworkPort(ConstrainedInt):
-    """
-    Define network port as constrainer integer.
-
-    To define a default value with this type:
-        port: NetworkPort = typing.cast(NetworkPort, 1000)
-    """
-
-    ge = 0
-    le = 65535
+NetworkPort = Annotated[int, Field(ge=0, le=65535)]
 
 
 class PortStatus(Enum):

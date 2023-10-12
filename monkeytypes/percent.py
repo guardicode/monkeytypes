@@ -1,6 +1,8 @@
 from typing import Any, Self, TypeAlias
 
+from pydantic import GetCoreSchemaHandler
 from pydantic import NonNegativeFloat as PydanticNonNegativeFloat
+from pydantic_core import core_schema
 
 NonNegativeFloat: TypeAlias = PydanticNonNegativeFloat
 
@@ -19,11 +21,10 @@ class Percent(NonNegativeFloat):
         Percent._validate_range(v)
 
     @classmethod
-    def __get_validators__(cls):
-        for v in super().__get_validators__():
-            yield v
-
-        yield cls.validate
+    def __get_pydantic_core_schema__(
+        cls, _, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(cls.validate, handler(NonNegativeFloat))
 
     @classmethod
     def validate(cls, v: Any) -> Self:
@@ -60,9 +61,12 @@ class PercentLimited(Percent):
         PercentLimited._validate_range(v)
 
     @classmethod
-    def __get_validators__(cls):
-        for v in super().__get_validators__():
-            yield v
+    def __get_pydantic_core_schema__(
+        cls, _, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls.validate, handler.generate_schema(Percent)
+        )
 
     @staticmethod
     def _validate_range(v: Any):

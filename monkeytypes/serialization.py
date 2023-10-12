@@ -1,8 +1,8 @@
-from typing import Dict, List, Union
+from typing import Union
 
 JSONSerializable = Union[  # type: ignore[misc]
-    Dict[str, "JSONSerializable"],  # type: ignore[misc]
-    List["JSONSerializable"],  # type: ignore[misc]
+    dict[str, "JSONSerializable"],  # type: ignore[misc]
+    list["JSONSerializable"],  # type: ignore[misc]
     int,
     str,
     float,

@@ -1,44 +1,49 @@
-import re
-from typing import Callable, Mapping, Optional, Self, Tuple, Type
+from typing import Optional, Self
 
-from pydantic import ConstrainedStr, HttpUrl
-from semver import VersionInfo
-
-from monkeytypes import (
-    AgentPluginType,
-    InfectionMonkeyBaseModel,
-    InfectionMonkeyModelConfig,
-    OperatingSystem,
+from pydantic import (
+    GetCoreSchemaHandler,
+    GetJsonSchemaHandler,
+    HttpUrl,
+    StringConstraints,
+    field_serializer,
 )
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import core_schema
+from semver import VersionInfo
+from typing_extensions import Annotated
 
+from monkeytypes import AgentPluginType, InfectionMonkeyBaseModel, OperatingSystem
 
-class PluginName(ConstrainedStr):
-    """
-    A plugin name
-
-    Allowed characters are alphanumerics and underscore.
-    """
-
-    strip_whitespace = True
-    regex = re.compile("^[a-zA-Z0-9_]+$")
+PluginName = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, pattern=r"^[a-zA-Z0-9_]+$"),
+]
 
 
 class PluginVersion(VersionInfo):
     @classmethod
-    def __get_validators__(cls):
-        """Return a list of validator methods for pydantic models."""
-        yield cls.from_str
+    def __get_pydantic_core_schema__(
+        cls,
+        _,
+        handler: GetCoreSchemaHandler,
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls.from_str,
+            handler(str),
+        )
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        """Inject/mutate the pydantic field schema in-place."""
-        field_schema.update(
-            examples=[
-                "1.0.2",
-                "2.15.3-alpha",
-                "21.3.15-beta+12345",
-            ]
-        )
+    def __get_pydantic_json_schema__(
+        cls, core_schema: core_schema.CoreSchema, handler: GetJsonSchemaHandler
+    ) -> JsonSchemaValue:
+        json_schema = handler(core_schema)
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema["examples"] = [
+            "1.0.2",
+            "2.15.3-alpha",
+            "21.3.15-beta+12345",
+        ]
+        return json_schema
 
     @classmethod
     def from_str(cls, version: str) -> Self:
@@ -66,20 +71,21 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
 
     name: PluginName
     plugin_type: AgentPluginType
-    supported_operating_systems: Tuple[OperatingSystem, ...] = (
+    supported_operating_systems: tuple[OperatingSystem, ...] = (
         OperatingSystem.WINDOWS,
         OperatingSystem.LINUX,
     )
-    target_operating_systems: Tuple[OperatingSystem, ...] = (
+    target_operating_systems: tuple[OperatingSystem, ...] = (
         OperatingSystem.WINDOWS,
         OperatingSystem.LINUX,
     )
     title: Optional[str]
     version: PluginVersion
-    description: Optional[str]
+    description: Optional[str] = None
     remediation_suggestion: Optional[str] = None
     link_to_documentation: Optional[HttpUrl] = None
     safe: bool = False
 
-    class Config(InfectionMonkeyModelConfig):
-        json_encoders: Mapping[Type, Callable] = {PluginVersion: lambda v: str(v)}
+    @field_serializer("version", when_used="json")
+    def version_serialize(self, v):
+        return str(v)
