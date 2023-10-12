@@ -30,18 +30,21 @@ def test_base_model__set_type_error():
         Test2Model.float_model = "adsfasdfa"
 
 
-def test_base_model__config_update():
+def test_immutable_base_model__config_update():
     class MutableConfigModel(MutableInfectionMonkeyBaseModel):
         model_config = {"title": "GreatTitle"}
-
-    class IMutableConfigModel(InfectionMonkeyBaseModel):
-        model_config = {"title": "AnotherGreatTitle"}
 
     assert all(
         MutableConfigModel.model_config.get(key) == value
         for key, value in MutableInfectionMonkeyModelConfig.items()
     )
+
+
+def test_mutable_base_model__config_update():
+    class ImmutableMutableConfigModel(InfectionMonkeyBaseModel):
+        model_config = {"title": "AnotherGreatTitle"}
+
     assert all(
-        IMutableConfigModel.model_config.get(key) == value
+        ImmutableMutableConfigModel.model_config.get(key) == value
         for key, value in InfectionMonkeyModelConfig.items()
     )
