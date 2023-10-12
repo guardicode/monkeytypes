@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import SecretStr, field_serializer
 
 from .. import InfectionMonkeyBaseModel
+from .encoding import get_plaintext
 
 
 class SSHKeypair(InfectionMonkeyBaseModel):
@@ -14,4 +15,4 @@ class SSHKeypair(InfectionMonkeyBaseModel):
 
     @field_serializer("private_key", when_used="json")
     def dump_secret(self, v):
-        return v.get_secret_value()
+        return get_plaintext(v)

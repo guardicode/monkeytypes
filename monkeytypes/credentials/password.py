@@ -1,6 +1,7 @@
 from pydantic import SecretStr, field_serializer
 
 from .. import InfectionMonkeyBaseModel
+from .encoding import get_plaintext
 
 
 class Password(InfectionMonkeyBaseModel):
@@ -11,4 +12,4 @@ class Password(InfectionMonkeyBaseModel):
 
     @field_serializer("password", when_used="json")
     def dump_secret(self, v):
-        return v.get_secret_value()
+        return get_plaintext(v)
