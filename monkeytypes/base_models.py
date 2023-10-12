@@ -37,16 +37,16 @@ class InfectionMonkeyBaseModel(BaseModel):
             # TLDR: This exception handler allows users of this class to be decoupled from pydantic.
             #
             # When validation of a pydantic object fails, pydantic raises a `ValidationError`, which
-            # is-a `ValueError`, even if the real cause was a `TypeError`. Furthermore, allowing
+            # is a `ValueError`, even if the real cause was a `TypeError`. Furthermore, allowing
             # `pydantic.ValidationError` to be raised would couple other modules to pydantic, which
-            # is undesirable. This exception handler re-raises the first validation error taht
+            # is undesirable. This exception handler re-raises the first validation error that
             # pydantic encountered, allowing users of these models to `except` `TypeError` or
             # `ValueError` as appropriate.
             #
             # From version 2, Pydantic doesn't offer any way to decouple from ValidationError
-            # but it offers certain type names from which we can choose what errors should we
+            # but it offers certain type names from which we can choose which errors to
             # raise to decouple from ValidationError.
-            # This may not be needed if pydantic fix and merge this:
+            # This may not be needed if pydantic fixes and merges this:
             # https://github.com/pydantic/pydantic/issues/6498
             InfectionMonkeyBaseModel._raise_type_or_value_error(err)
 
