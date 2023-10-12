@@ -9,7 +9,7 @@ NT_HASH_DICT = {"nt_hash": "E520AC67419A9A224A3B108F3FA6CB6D"}
 
 
 def test_nt_hash__serialization():
-    assert NT_HASH_OBJECT.model_dump(mode="json") == NT_HASH_DICT
+    assert NT_HASH_OBJECT.to_json_dict() == NT_HASH_DICT
 
 
 def test_nt_hash__deserialization():

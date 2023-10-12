@@ -9,7 +9,7 @@ LM_HASH_DICT = {"lm_hash": "E520AC67419A9A224A3B108F3FA6CB6D"}
 
 
 def test_lm_hash__serialization():
-    assert LM_HASH_OBJECT.model_dump(mode="json") == LM_HASH_DICT
+    assert LM_HASH_OBJECT.to_json_dict() == LM_HASH_DICT
 
 
 def test_lm_hash__deserialization():

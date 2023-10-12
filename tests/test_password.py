@@ -8,7 +8,7 @@ PASSWORD_DICT = {"password": "some_simple_password"}
 
 
 def test_password__serialization():
-    assert PASSWORD_OBJECT.model_dump(mode="json") == PASSWORD_DICT
+    assert PASSWORD_OBJECT.to_json_dict() == PASSWORD_DICT
 
 
 def test_password__deserialization():

@@ -69,6 +69,9 @@ class InfectionMonkeyBaseModel(BaseModel):
 
         raise ValueError(e["msg"]) from error
 
+    def to_json_dict(self):
+        return self.model_dump(mode="json")
+
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
     model_config = MutableInfectionMonkeyModelConfig

@@ -50,7 +50,7 @@ FAKE_MANIFEST_OBJECT = AgentPluginManifest(
 
 
 def test_agent_plugin_manifest__serialization():
-    assert FAKE_MANIFEST_OBJECT.model_dump(mode="json") == FAKE_AGENT_MANIFEST_DICT_OUT
+    assert FAKE_MANIFEST_OBJECT.to_json_dict() == FAKE_AGENT_MANIFEST_DICT_OUT
 
 
 def test_agent_plugin_manifest__deserialization():

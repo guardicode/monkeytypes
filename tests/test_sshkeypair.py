@@ -12,7 +12,7 @@ SSH_KEYPAIR_DICT = {
 
 
 def test_ssh_keypair__serialization():
-    assert SSH_KEYPAIR_OBJECT.model_dump(mode="json") == SSH_KEYPAIR_DICT
+    assert SSH_KEYPAIR_OBJECT.to_json_dict() == SSH_KEYPAIR_DICT
 
 
 def test_ssh_keypair__deserialization():
