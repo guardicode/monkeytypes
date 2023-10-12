@@ -1,23 +1,34 @@
-import json
-from collections.abc import Sequence
+import re
+from typing import Any
 
-from pydantic import BaseModel, Extra, ValidationError
+from pydantic import BaseModel, ConfigDict, ValidationError
 
-
-class InfectionMonkeyModelConfig:
-    allow_mutation = False
-    underscore_attrs_are_private = True
-    extra = Extra.forbid
+TYPE_ERROR_LIST = [r"\w+_type", "int_from_float", "is_instance_of", "is_subcass_of"]
+ILLEGAL_MUTATION_LIST = ["frozen_field", "frozen_instance"]
 
 
-class MutableInfectionMonkeyModelConfig(InfectionMonkeyModelConfig):
-    allow_mutation = True
-    validate_assignment = True
+class IllegalMutationError(RuntimeError):
+    """
+    Raised when an error occurs during illegal mutation of fields
+
+    """
+
+    pass
+
+
+InfectionMonkeyModelConfig = ConfigDict(frozen=True, extra="forbid")
+
+MutableInfectionMonkeyModelConfig = ConfigDict(
+    **{
+        **InfectionMonkeyModelConfig,
+        "frozen": False,
+        "validate_assignment": True,
+    }
+)
 
 
 class InfectionMonkeyBaseModel(BaseModel):
-    class Config(InfectionMonkeyModelConfig):
-        pass
+    model_config = InfectionMonkeyModelConfig
 
     def __init__(self, **kwargs):
         try:
@@ -27,35 +38,37 @@ class InfectionMonkeyBaseModel(BaseModel):
             #
             # When validation of a pydantic object fails, pydantic raises a `ValidationError`, which
             # is a `ValueError`, even if the real cause was a `TypeError`. Furthermore, allowing
-            # `pydantic.ValueError` to be raised would couple other modules to pydantic, which is
-            # undesirable. This exception handler re-raises the first validation error that pydantic
-            # encountered. This allows users of these models to `except` `TypeError` or `ValueError`
-            # and handle them. Pydantic-specific errors are still raised, but they inherit from
-            # `TypeError` or `ValueError`.
-            e = err.raw_errors[0]
-            while isinstance(e, Sequence):
-                e = e[0]
-            error = e.exc
-            if hasattr(e, "_loc"):
-                error.args = (f"{e._loc} {error}",)
-            raise error
+            # `pydantic.ValidationError` to be raised would couple other modules to pydantic, which
+            # is undesirable. This exception handler re-raises the first validation error that
+            # pydantic encountered, allowing users of these models to `except` `TypeError` or
+            # `ValueError` as appropriate.
+            #
+            # From version 2, Pydantic doesn't offer any way to decouple from ValidationError
+            # but it offers certain type names from which we can choose which errors to
+            # raise to decouple from ValidationError.
+            # This may not be needed if pydantic fixes and merges this:
+            # https://github.com/pydantic/pydantic/issues/6498
+            InfectionMonkeyBaseModel._raise_type_or_value_error(err)
 
-    # We need to be able to convert our models to fully simplified dictionaries. The
-    # `BaseModel.dict()` does not support this. There is a proposal to add a `simplify` keyword
-    # argument to `dict()` to support this. See
-    # https://github.com/pydantic/pydantic/issues/951#issuecomment-552463606. The hope is that we
-    # can override `dict()` with an implementation of `simplify` and remove it when the feature gets
-    # merged. If the feature doesn't get merged, or the interface is changed, this function can
-    # continue to serve as a wrapper until we can update all references to it.
-    def dict(self, simplify=False, **kwargs):
-        if simplify:
-            # Allow keyword arguments to be passed to `json()`
-            # We can pass kwargs to `json()` because the parameters of BaseModel.json() are a
-            # superset of those of BaseModel.dict().
-            return json.loads(self.json(**kwargs))
-        return BaseModel.dict(self, **kwargs)
+    def __setattr__(self, name: str, value: Any):
+        try:
+            super().__setattr__(name, value)
+        except ValidationError as err:
+            e = err.errors()[0]
+            if e["type"] in ILLEGAL_MUTATION_LIST:
+                raise IllegalMutationError(e["msg"]) from err
+
+            InfectionMonkeyBaseModel._raise_type_or_value_error(err)
+
+    @staticmethod
+    def _raise_type_or_value_error(error: ValidationError):
+        e = error.errors()[0]
+        for pattern in TYPE_ERROR_LIST:
+            if re.match(pattern, e["type"]):
+                raise TypeError(e["msg"]) from error
+
+        raise ValueError(e["msg"]) from error
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
-    class Config(MutableInfectionMonkeyModelConfig):
-        pass
+    model_config = MutableInfectionMonkeyModelConfig
