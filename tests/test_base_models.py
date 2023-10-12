@@ -18,18 +18,19 @@ class MutableModel(MutableInfectionMonkeyBaseModel):
     float_model: Optional[FloatModel]
 
 
-METHODS_DICT = {"example_field": 42.0}
-METHODS_JSON = '{"example_field":42.0}'
+METHODS_DICT = {"example_field": 42.0, "example_list": [1, 2, 3]}
+METHODS_JSON = '{"example_field":42.0,"example_list":[1,2,3]}'
 METHODS_NOT_VALID_JSON = '{"example_field": "not_an_int"}'
 
 
-class MethodsModel(InfectionMonkeyBaseModel):
+class MethodsModel(MutableInfectionMonkeyBaseModel):
     example_field: float
+    example_list: list
 
 
 @pytest.fixture
 def methods_model():
-    return MethodsModel(example_field=42.0)
+    return MethodsModel(example_field=42.0, example_list=[1, 2, 3])
 
 
 def test_set_value_error():
@@ -86,8 +87,24 @@ def test_base_model_from_json_invalid(methods_model):
 
 
 def test_base_model_copy(methods_model):
-    assert methods_model == methods_model.copy()
+    model_copy = methods_model.copy()
+
+    assert methods_model == model_copy
+
+    model_copy.example_field = methods_model.example_field - 10
+    model_copy.example_list.append(4)
+
+    assert methods_model.example_field != model_copy.example_field
+    assert len(model_copy.example_list) == len(methods_model.example_list)
 
 
 def test_base_model_deep_copy(methods_model):
-    assert methods_model == methods_model.deep_copy()
+    model_copy = methods_model.deep_copy()
+
+    assert methods_model == model_copy
+
+    model_copy.example_field = methods_model.example_field + 9
+    model_copy.example_list.append(4)
+
+    assert methods_model.example_field != model_copy.example_field
+    assert len(model_copy.example_list) != len(methods_model.example_list)
