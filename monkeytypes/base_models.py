@@ -1,5 +1,5 @@
 import re
-from typing import Any
+from typing import Any, Union
 
 from pydantic import BaseModel, ConfigDict, ValidationError
 
@@ -71,6 +71,21 @@ class InfectionMonkeyBaseModel(BaseModel):
 
     def to_json_dict(self):
         return self.model_dump(mode="json")
+
+    def to_dict(self):
+        return self.model_dump()
+
+    def to_json(self):
+        return self.model_dump_json()
+
+    def from_json(self, json_data: Union[str, bytes, bytearray]):
+        return self.model_validate_json(json_data)
+
+    def copy(self):
+        return self.model_copy()
+
+    def deep_copy(self):
+        return self.model_copy(deep=True)
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
