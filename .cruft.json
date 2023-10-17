@@ -1,5 +1,5 @@
 {
-  "template": "/home/msalvatore/git/infection-monkey-cookiecutter",
+  "template": "https://github.com/guardicode/infection-monkey-cookiecutter/",
   "commit": "562ee0b3fab64d681e75418d21f035f06146146b",
   "checkout": null,
   "context": {
