@@ -17,8 +17,14 @@ class LMHash(InfectionMonkeyBaseModel):
     @field_validator("lm_hash")
     @classmethod
     def validate_hash_format(cls, lm_hash: Any) -> str:
-        if not re.match(ntlm_hash_regex, get_plaintext(lm_hash)):
+        plaintext = get_plaintext(lm_hash)
+
+        if not isinstance(plaintext, str):
+            raise TypeError("LM hash must be a string")
+
+        if not re.match(ntlm_hash_regex, plaintext):
             raise ValueError("Invalid LM hash provided")
+
         return lm_hash
 
     @field_serializer("lm_hash", when_used="json")
