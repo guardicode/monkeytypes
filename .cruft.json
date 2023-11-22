@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/guardicode/infection-monkey-cookiecutter/",
-  "commit": "39fd7f86609b55bfb07e2b80b7280fde80962236",
+  "commit": "a358b4a31c1bd77c1c9510aa4993d5ecbfda17f4",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -21,6 +21,7 @@
       "python_minor_version": "11",
       "hook_shellcheck": "n",
       "codecov": "y",
+      "travis_ci": "y",
       "exclude_these_file_in_flake8": "vulture_allowlist.py",
       "_black_version": "23.9.1",
       "_dlint_version": "0.14.1",
