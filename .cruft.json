@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/guardicode/infection-monkey-cookiecutter/",
-  "commit": "a358b4a31c1bd77c1c9510aa4993d5ecbfda17f4",
+  "commit": "ecf843de87f18890e15caa3ef6dd3495973ba31b",
   "checkout": null,
   "context": {
     "cookiecutter": {
