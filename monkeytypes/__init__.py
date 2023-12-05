@@ -29,6 +29,7 @@ from .file_extension import FileExtension
 from .percent import Percent, PercentLimited, NonNegativeFloat
 from .b64_bytes import B64Bytes
 from .network_range import InvalidNetworkRangeError, NetworkRange, CidrRange, IpRange, SingleIpRange
+from .local_machine_info import LocalMachineInfo
 
 from .credentials.email_address import EmailAddress
 from .credentials.username import Username
