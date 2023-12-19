@@ -10,28 +10,50 @@ from .encoding import get_plaintext
 
 
 def get_discriminator_value_identity(v) -> Optional[str]:
-    keys = list(v.keys())
+    if type(v) is dict:
+        keys = list(v.keys())
 
-    if len(keys) == 0:
-        return None
+        if len(keys) == 0:
+            return None
 
-    if keys[0] in ["username", "email_address"]:
-        return keys[0]
+        if keys[0] in ["username", "email_address"]:
+            return keys[0]
+
+    else:
+        if isinstance(v, Username):
+            return "username"
+
+        if isinstance(v, EmailAddress):
+            return "email_address"
 
     return None
 
 
 def get_discriminator_value_secret(v) -> Optional[str]:
-    keys = list(v.keys())
+    if type(v) is dict:
+        keys = list(v.keys())
 
-    if len(keys) == 0:
-        return None
+        if len(keys) == 0:
+            return None
 
-    if "private_key" in keys:
-        return "ssh_keypair"
+        if "private_key" in keys:
+            return "ssh_keypair"
 
-    if keys[0] in ["password", "lm_hash", "nt_hash"]:
-        return keys[0]
+        if keys[0] in ["password", "lm_hash", "nt_hash"]:
+            return keys[0]
+
+    else:
+        if isinstance(v, Password):
+            return "password"
+
+        if isinstance(v, LMHash):
+            return "lm_hash"
+
+        if isinstance(v, NTHash):
+            return "nt_hash"
+
+        if isinstance(v, SSHKeypair):
+            return "ssh_keypair"
 
     return None
 
@@ -41,7 +63,7 @@ Identity = Annotated[
     Discriminator(
         get_discriminator_value_identity,
         custom_error_type=INVALID_UNION_MEMBER_ERROR,
-        custom_error_message='Invalid identity. Expected "username" or "email_address".',
+        custom_error_message="Invalid identity. Expected username or email address.",
     ),
 ]
 
@@ -55,8 +77,7 @@ Secret = Annotated[
     Discriminator(
         get_discriminator_value_secret,
         custom_error_type=INVALID_UNION_MEMBER_ERROR,
-        custom_error_message='Invalid secret. Expected "password", "lm_hash", "nt_hash", '
-        'or "private_key".',
+        custom_error_message="Invalid secret. Expected password, LM hash, NT hash, or SSH keypair.",
     ),
 ]
 
