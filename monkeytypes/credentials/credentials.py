@@ -41,7 +41,7 @@ Identity = Annotated[
     Discriminator(
         get_discriminator_value_identity,
         custom_error_type=INVALID_UNION_MEMBER_ERROR,
-        custom_error_message='Invalid identity, expected "username" or "email_address" key',
+        custom_error_message='Invalid identity. Expected "username" or "email_address".',
     ),
 ]
 
@@ -55,8 +55,8 @@ Secret = Annotated[
     Discriminator(
         get_discriminator_value_secret,
         custom_error_type=INVALID_UNION_MEMBER_ERROR,
-        custom_error_message='Invalid secret, expected "password", "lm_hash", "nt_hash", '
-        'or "private_key" key',
+        custom_error_message='Invalid secret. Expected "password", "lm_hash", "nt_hash", '
+        'or "private_key".',
     ),
 ]
 

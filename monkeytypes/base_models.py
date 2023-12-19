@@ -68,7 +68,7 @@ class InfectionMonkeyBaseModel(BaseModel):
         for pattern in TYPE_ERROR_LIST:
             if re.match(pattern, e["type"]):
                 raise TypeError(
-                    f"{e['msg']}, got `{type(e['input']).__name__}`: {e['loc']}"
+                    f"{e['msg']}, got `{type(e['input']).__name__}` in {e['loc']}"
                 ) from error
 
         raise ValueError(e["msg"]) from error
