@@ -8,6 +8,13 @@ from .. import INVALID_UNION_MEMBER_ERROR, InfectionMonkeyBaseModel
 from . import EmailAddress, LMHash, NTHash, Password, SSHKeypair, Username
 from .encoding import get_plaintext
 
+USERNAME_TAG = "username"
+EMAIL_ADDRESS_TAG = "email_address"
+PASSWORD_TAG = "password"
+LM_HASH_TAG = "lm_hash"
+NT_HASH_TAG = "nt_hash"
+SSH_KEYPAIR_TAG = "ssh_keypair"
+
 
 def get_discriminator_value_identity(v) -> Optional[str]:
     if type(v) is dict:
@@ -16,15 +23,18 @@ def get_discriminator_value_identity(v) -> Optional[str]:
         if len(keys) == 0:
             return None
 
-        if keys[0] in ["username", "email_address"]:
-            return keys[0]
+        if keys[0] == "username":
+            return USERNAME_TAG
+
+        if keys[0] == "email_address":
+            return EMAIL_ADDRESS_TAG
 
     else:
         if isinstance(v, Username):
-            return "username"
+            return USERNAME_TAG
 
         if isinstance(v, EmailAddress):
-            return "email_address"
+            return EMAIL_ADDRESS_TAG
 
     return None
 
@@ -36,30 +46,36 @@ def get_discriminator_value_secret(v) -> Optional[str]:
         if len(keys) == 0:
             return None
 
-        if "private_key" in keys:
-            return "ssh_keypair"
+        if "private_key" in keys:  # for an SSH keypair, there could be a `public_key` key too
+            return SSH_KEYPAIR_TAG
 
-        if keys[0] in ["password", "lm_hash", "nt_hash"]:
-            return keys[0]
+        if keys[0] == "password":
+            return PASSWORD_TAG
+
+        if keys[0] == "lm_hash":
+            return LM_HASH_TAG
+
+        if keys[0] == "nt_hash":
+            return NT_HASH_TAG
 
     else:
         if isinstance(v, Password):
-            return "password"
+            return PASSWORD_TAG
 
         if isinstance(v, LMHash):
-            return "lm_hash"
+            return LM_HASH_TAG
 
         if isinstance(v, NTHash):
-            return "nt_hash"
+            return NT_HASH_TAG
 
         if isinstance(v, SSHKeypair):
-            return "ssh_keypair"
+            return SSH_KEYPAIR_TAG
 
     return None
 
 
 Identity = Annotated[
-    Union[Annotated[Username, Tag("username")], Annotated[EmailAddress, Tag("email_address")]],
+    Union[Annotated[Username, Tag(USERNAME_TAG)], Annotated[EmailAddress, Tag(EMAIL_ADDRESS_TAG)]],
     Discriminator(
         get_discriminator_value_identity,
         custom_error_type=INVALID_UNION_MEMBER_ERROR,
@@ -69,10 +85,10 @@ Identity = Annotated[
 
 Secret = Annotated[
     Union[
-        Annotated[Password, Tag("password")],
-        Annotated[LMHash, Tag("lm_hash")],
-        Annotated[NTHash, Tag("nt_hash")],
-        Annotated[SSHKeypair, Tag("ssh_keypair")],
+        Annotated[Password, Tag(PASSWORD_TAG)],
+        Annotated[LMHash, Tag(LM_HASH_TAG)],
+        Annotated[NTHash, Tag(NT_HASH_TAG)],
+        Annotated[SSHKeypair, Tag(SSH_KEYPAIR_TAG)],
     ],
     Discriminator(
         get_discriminator_value_secret,
