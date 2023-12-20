@@ -43,7 +43,7 @@ paths = ["monkeytypes", "vulture_allowlist.py"]
 
 [tool.poetry]
 name = "monkey-types"
-version = "v0.3.0"
+version = "v0.4.0"
 description = "A collection of types and models used by Infection Monkey"
 authors = ["Mike Salvatore <mike.s.salvatore@gmail.com>"]
 license = "GPLv3"
@@ -58,7 +58,7 @@ include = ["CHANGELOG.md", "README.md"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pydantic = {extras = ["email"], version = "^2.4.2"}
+pydantic = {extras = ["email"], version = "^2.5.0"}
 semver = "2.13.0"
 
 [tool.poetry.dev-dependencies]

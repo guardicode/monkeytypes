@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Any, Union
 
 import pytest
 
@@ -18,9 +18,11 @@ def invalid_value_ntlm_hashes() -> list[str]:
 
 
 @pytest.fixture(scope="session")
-def invalid_type_ntlm_hashes() -> list[Union[int, float]]:
+def invalid_type_ntlm_hashes() -> list[Union[int, Any]]:
     return [
         0,
         1,
         2.0,
+        None,
+        b"abc",
     ]
