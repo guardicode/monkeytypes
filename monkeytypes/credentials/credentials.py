@@ -15,6 +15,18 @@ LM_HASH_TAG = "lm_hash"
 NT_HASH_TAG = "nt_hash"
 SSH_KEYPAIR_TAG = "ssh_keypair"
 
+IDENTITY_TYPES_TO_TAGS = {
+    Username: USERNAME_TAG,
+    EmailAddress: EMAIL_ADDRESS_TAG,
+}
+
+SECRET_TYPES_TO_TAGS = {
+    Password: PASSWORD_TAG,
+    LMHash: LM_HASH_TAG,
+    NTHash: NT_HASH_TAG,
+    SSHKeypair: SSH_KEYPAIR_TAG,
+}
+
 
 def get_discriminator_value_identity(v) -> Optional[str]:
     if type(v) is dict:
@@ -30,11 +42,7 @@ def get_discriminator_value_identity(v) -> Optional[str]:
             return EMAIL_ADDRESS_TAG
 
     else:
-        if isinstance(v, Username):
-            return USERNAME_TAG
-
-        if isinstance(v, EmailAddress):
-            return EMAIL_ADDRESS_TAG
+        return IDENTITY_TYPES_TO_TAGS.get(type(v), None)
 
     return None
 
@@ -59,17 +67,7 @@ def get_discriminator_value_secret(v) -> Optional[str]:
             return NT_HASH_TAG
 
     else:
-        if isinstance(v, Password):
-            return PASSWORD_TAG
-
-        if isinstance(v, LMHash):
-            return LM_HASH_TAG
-
-        if isinstance(v, NTHash):
-            return NT_HASH_TAG
-
-        if isinstance(v, SSHKeypair):
-            return SSH_KEYPAIR_TAG
+        return SECRET_TYPES_TO_TAGS.get(type(v), None)
 
     return None
 
