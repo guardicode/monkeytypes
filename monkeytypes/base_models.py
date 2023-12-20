@@ -3,6 +3,8 @@ from typing import Any, Union
 
 from pydantic import BaseModel, ConfigDict, ValidationError
 
+INVALID_UNION_MEMBER_ERROR = "invalid_union_member"
+
 TYPE_ERROR_LIST = [r"\w+_type", "int_from_float", "is_instance_of", "is_subcass_of"]
 ILLEGAL_MUTATION_LIST = ["frozen_field", "frozen_instance"]
 
@@ -65,7 +67,9 @@ class InfectionMonkeyBaseModel(BaseModel):
         e = error.errors()[0]
         for pattern in TYPE_ERROR_LIST:
             if re.match(pattern, e["type"]):
-                raise TypeError(e["msg"]) from error
+                raise TypeError(
+                    f"{e['msg']}, got `{type(e['input']).__name__}` in {e['loc']}"
+                ) from error
 
         raise ValueError(e["msg"]) from error
 
