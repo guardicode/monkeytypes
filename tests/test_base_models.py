@@ -36,13 +36,13 @@ def methods_model():
 def test_set_value_error():
     ValueFloatModel = FloatModel(number=4.1)
     with pytest.raises(ValueError):
-        ValueFloatModel.number = "adsfasdfa"
+        ValueFloatModel.number = "adsfasdfa"  # type: ignore [assignment]
 
 
 def test_set_type_error():
     Test2Model = MutableModel(float_model=None)
     with pytest.raises(TypeError):
-        Test2Model.float_model = "adsfasdfa"
+        Test2Model.float_model = "adsfasdfa"  # type: ignore [assignment]
 
 
 def test_immutable_base_model_config_update():
