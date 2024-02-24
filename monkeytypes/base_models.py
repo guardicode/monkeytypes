@@ -74,13 +74,13 @@ class InfectionMonkeyBaseModel(BaseModel):
         raise ValueError(e["msg"]) from error
 
     def to_json_dict(self):
-        return self.model_dump(mode="json")
+        return self.model_dump(mode="json", by_alias=True)
 
     def to_dict(self):
         return self.model_dump()
 
     def to_json(self):
-        return self.model_dump_json()
+        return self.model_dump_json(by_alias=True)
 
     def from_json(self, json_data: Union[str, bytes, bytearray]):
         return self.model_validate_json(json_data)

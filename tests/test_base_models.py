@@ -1,6 +1,7 @@
 from typing import Optional
 
 import pytest
+from pydantic import AliasChoices, Field
 
 from monkeytypes import (
     InfectionMonkeyBaseModel,
@@ -31,6 +32,12 @@ class MethodsModel(MutableInfectionMonkeyBaseModel):
 @pytest.fixture
 def methods_model():
     return MethodsModel(example_field=42.0, example_list=[1, 2, 3])
+
+
+class ModelWithAliases(InfectionMonkeyBaseModel):
+    f1: str = Field(
+        ..., validation_alias=AliasChoices("f-1", "f_1", "f1"), serialization_alias="f_1"
+    )
 
 
 def test_set_value_error():
@@ -108,3 +115,20 @@ def test_base_model_deep_copy(methods_model):
 
     assert methods_model.example_field != model_copy.example_field
     assert len(model_copy.example_list) != len(methods_model.example_list)
+
+
+@pytest.mark.parametrize("field_name", ["f-1", "f_1", "f1"])
+def test_deserialize_alias(field_name: str):
+    expected_value = "test"
+    m = ModelWithAliases(**{field_name: expected_value})
+
+    assert m.f1 == expected_value
+
+
+def test_serialize_alias():
+    expected_value = "test"
+    m = ModelWithAliases(f1=expected_value)
+
+    assert "f_1" in m.to_json()
+    assert "f_1" in m.to_json_dict()
+    assert m.to_json_dict()["f_1"] == expected_value
