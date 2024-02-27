@@ -7,6 +7,10 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
 
+## [v0.6.0 - 2024-02-26]
+### Changed
+- Allow error handling to be overridden in InfectionMonkeyBaseModel.
+
 ## [v0.5.0 - 2024-02-24]
 ### Changed
 - Respect aliases when serializing/deserializing JSON

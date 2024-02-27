@@ -50,7 +50,7 @@ class InfectionMonkeyBaseModel(BaseModel):
             # raise to decouple from ValidationError.
             # This may not be needed if pydantic fixes and merges this:
             # https://github.com/pydantic/pydantic/issues/6498
-            InfectionMonkeyBaseModel._raise_type_or_value_error(err)
+            self._raise_type_or_value_error(err)
 
     def __setattr__(self, name: str, value: Any):
         try:
@@ -60,7 +60,7 @@ class InfectionMonkeyBaseModel(BaseModel):
             if e["type"] in ILLEGAL_MUTATION_LIST:
                 raise IllegalMutationError(e["msg"]) from err
 
-            InfectionMonkeyBaseModel._raise_type_or_value_error(err)
+            self._raise_type_or_value_error(err)
 
     @staticmethod
     def _raise_type_or_value_error(error: ValidationError):
