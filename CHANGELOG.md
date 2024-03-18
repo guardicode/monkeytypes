@@ -7,21 +7,21 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
 
-## [v0.6.0 - 2024-02-26]
+## [0.6.0] - 2024-02-26
 ### Changed
 - Allow error handling to be overridden in InfectionMonkeyBaseModel.
 
-## [v0.5.0 - 2024-02-24]
+## [0.5.0] - 2024-02-24
 ### Changed
 - Respect aliases when serializing/deserializing JSON
 
-## [v0.4.0 - 2023-12-20]
+## [0.4.0] - 2023-12-20
 ### Changed
 - Raise explicit TypeErrors when parsing LM/NT hashes
 - Raise clearer errors when parsing identities and secrets
 
 
-## [v0.3.0 - 2023-10-12]
+## [0.3.0] - 2023-10-12
 ### Added
 - InfectionMonkeyBaseModel.to_dict()
 - InfectionMonkeyBaseModel.to_json()
@@ -35,7 +35,7 @@ the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 - get_secret_value() method to get_plaintext() function
 
 
-## [v0.2.0 - 2023-10-03]
+## [0.2.0] - 2023-10-03
 ### Added
 - Installation and usage to the README
 - Support for type checking
