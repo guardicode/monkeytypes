@@ -62,7 +62,7 @@ pydantic = {extras = ["email"], version = "^2.5.0"}
 semver = "2.13.0"
 
 [tool.poetry.dev-dependencies]
-black = "23.9.1"
+black = "24.3.0"
 dlint = "0.14.1"
 flake8 = "6.0.0"
 isort = "5.12.0"
