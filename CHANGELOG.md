@@ -7,7 +7,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
 
-## [Unreleased]
+## [0.7.0] - 2024-06-13
 ## Fixed
 - Incomplete Percent/PercentLimited JSON schema generation.
 
