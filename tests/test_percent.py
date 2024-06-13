@@ -1,5 +1,5 @@
 import pytest
-from pydantic import BaseModel
+from pydantic import BaseModel, TypeAdapter
 
 from monkeytypes import Percent, PercentLimited
 
@@ -31,6 +31,16 @@ def test_as_decimal_fraction(input_value: float, expected_decimal_fraction: floa
     assert Model(p=input_value).p.as_decimal_fraction() == expected_decimal_fraction  # type: ignore [arg-type]  # noqa: E501
 
 
+def test_percent_schema():
+    adapter = TypeAdapter(Percent)
+
+    schema = adapter.json_schema()
+
+    assert "description" in schema
+    assert "maximum" not in schema
+    assert schema["minimum"] == 0.0
+
+
 class ModelLimited(BaseModel):
     p: PercentLimited
 
@@ -51,3 +61,13 @@ def test_valid_percent_limited(input_value: float):
 )
 def test_as_decimal_fraction_limited(input_value: float, expected_decimal_fraction: float):
     assert ModelLimited(p=input_value).p.as_decimal_fraction() == expected_decimal_fraction  # type: ignore [arg-type]  # noqa: E501
+
+
+def test_percent_limited_schema():
+    adapter = TypeAdapter(PercentLimited)
+
+    schema = adapter.json_schema()
+
+    assert "description" in schema
+    assert schema["maximum"] == 100.0
+    assert schema["minimum"] == 0.0
