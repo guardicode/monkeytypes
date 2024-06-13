@@ -15,8 +15,6 @@ class IllegalMutationError(RuntimeError):
 
     """
 
-    pass
-
 
 InfectionMonkeyModelConfig = ConfigDict(frozen=True, extra="forbid")
 
