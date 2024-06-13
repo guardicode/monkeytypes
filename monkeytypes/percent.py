@@ -1,6 +1,7 @@
-from typing import Any, Self, TypeAlias
+from typing import Annotated, Any, Self, TypeAlias
 
-from pydantic import GetCoreSchemaHandler
+from annotated_types import Le
+from pydantic import Field, GetCoreSchemaHandler
 from pydantic import NonNegativeFloat as PydanticNonNegativeFloat
 from pydantic_core import core_schema
 
@@ -9,7 +10,7 @@ NonNegativeFloat: TypeAlias = PydanticNonNegativeFloat
 
 class Percent(NonNegativeFloat):
     """
-    A type representing a percentage
+    A percentage greater than 0.0
 
     Note that percentages can be greater than 100. For example, I may have consumed 120% of my quota
     (if quotas aren't strictly enforced).
@@ -24,7 +25,12 @@ class Percent(NonNegativeFloat):
     def __get_pydantic_core_schema__(
         cls, _, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
-        return core_schema.no_info_after_validator_function(cls.validate, handler(NonNegativeFloat))
+        return core_schema.no_info_after_validator_function(
+            cls.validate,
+            handler(
+                Annotated[NonNegativeFloat, Field(description="A percentage greater than 0.0")]
+            ),
+        )
 
     @classmethod
     def validate(cls, v: Any) -> Self:
@@ -52,10 +58,8 @@ class Percent(NonNegativeFloat):
 
 class PercentLimited(Percent):
     """
-    A type representing a percentage limited to 100
+    A percentage between 0.0 and 100.0
     """
-
-    le = 100
 
     def __init__(self, v: Any):
         PercentLimited._validate_range(v)
@@ -65,7 +69,14 @@ class PercentLimited(Percent):
         cls, _, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(
-            cls.validate, handler.generate_schema(Percent)
+            cls.validate,
+            handler(
+                Annotated[
+                    NonNegativeFloat,
+                    Le(100),
+                    Field(description="A percentage between 0.0 and 100.0"),
+                ]
+            ),
         )
 
     @staticmethod
