@@ -1,9 +1,10 @@
 {
   "template": "https://github.com/guardicode/infection-monkey-cookiecutter/",
-  "commit": "612fb5cb1ac5fb0a5264b4627bc6de7ce2b9f476",
+  "commit": "9394e4053a35189221ffa286099753c3ea73ecf5",
   "checkout": null,
   "context": {
     "cookiecutter": {
+      "__project_type": "generic",
       "project_name": "monkeytypes",
       "__project_slug": "monkeytypes",
       "full_name": "Mike Salvatore",
@@ -22,7 +23,6 @@
       "support_type_checking": "y",
       "hook_shellcheck": "n",
       "codecov": "y",
-      "travis_ci": "y",
       "exclude_these_file_in_flake8": "vulture_allowlist.py",
       "_black_version": "24.3.0",
       "_dlint_version": "0.14.1",
