@@ -1,5 +1,5 @@
 import re
-from typing import Any, Union
+from typing import Any, Self, Union
 
 from pydantic import BaseModel, ConfigDict, ValidationError
 
@@ -71,22 +71,27 @@ class InfectionMonkeyBaseModel(BaseModel):
 
         raise ValueError(e["msg"]) from error
 
-    def to_json_dict(self):
+    def to_json_dict(self) -> dict[str, Any]:
         return self.model_dump(mode="json", by_alias=True)
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, Any]:
         return self.model_dump()
 
-    def to_json(self):
+    def to_json(self) -> str:
         return self.model_dump_json(by_alias=True)
 
-    def from_json(self, json_data: Union[str, bytes, bytearray]):
+    def from_json(self, json_data: Union[str, bytes, bytearray]) -> Self:
         return self.model_validate_json(json_data)
 
-    def copy(self):
+    # NOTE: The copy() method's signature is incompatible with the the
+    #       supertype's definition (BaseModel). However, the supertype's
+    #       `copy()` method is deprecated, so we'll ignore the issue as it will
+    #       eventually resolve itself, and this is the interface we wish to
+    #       provide.
+    def copy(self) -> Self:  # type: ignore [override]
         return self.model_copy()
 
-    def deep_copy(self):
+    def deep_copy(self) -> Self:
         return self.model_copy(deep=True)
 
 
