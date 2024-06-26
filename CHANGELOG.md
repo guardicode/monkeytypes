@@ -8,7 +8,7 @@ the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
 
 ## [0.7.0] - 2024-06-13
-## Fixed
+### Fixed
 - Incomplete Percent/PercentLimited JSON schema generation.
 
 ## [0.6.0] - 2024-02-26
