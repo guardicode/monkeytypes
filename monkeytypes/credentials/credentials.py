@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import Annotated, Optional, Union
 
-from pydantic import Discriminator, Tag, field_serializer
+from pydantic import Discriminator, Tag
 
 from .. import INVALID_UNION_MEMBER_ERROR, InfectionMonkeyBaseModel
 from . import EmailAddress, LMHash, NTHash, Password, SSHKeypair, Username
-from .encoding import get_plaintext
 
 USERNAME_TAG = "username"
 EMAIL_ADDRESS_TAG = "email_address"
@@ -106,10 +105,6 @@ class Credentials(InfectionMonkeyBaseModel):
 
     secret: Optional[Secret]
     """Secret part of credentials, like a password or a hash"""
-
-    @field_serializer("identity", "secret", when_used="json")
-    def serialize(self, v) -> Optional[Union[str, bytes]]:
-        return get_plaintext(v)
 
     def __hash__(self) -> int:
         return hash((self.identity, self.secret))
