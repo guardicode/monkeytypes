@@ -87,5 +87,5 @@ class AgentPluginManifest(InfectionMonkeyBaseModel):
     safe: bool = False
 
     @field_serializer("version", when_used="json")
-    def version_serialize(self, v):
+    def version_serialize(self, v) -> str:
         return str(v)
