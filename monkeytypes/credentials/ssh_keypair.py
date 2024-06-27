@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from pydantic import SecretStr, field_serializer
 
@@ -14,5 +14,5 @@ class SSHKeypair(InfectionMonkeyBaseModel):
         return hash((self.private_key, self.public_key))
 
     @field_serializer("private_key", when_used="json")
-    def dump_secret(self, v):
+    def dump_secret(self, v) -> Optional[Union[str, bytes]]:
         return get_plaintext(v)

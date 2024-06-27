@@ -108,7 +108,7 @@ class Credentials(InfectionMonkeyBaseModel):
     """Secret part of credentials, like a password or a hash"""
 
     @field_serializer("identity", "secret", when_used="json")
-    def serialize(self, v):
+    def serialize(self, v) -> Optional[Union[str, bytes]]:
         return get_plaintext(v)
 
     def __hash__(self) -> int:

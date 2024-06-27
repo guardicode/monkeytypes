@@ -1,5 +1,5 @@
 import re
-from typing import Any
+from typing import Any, Optional, Union
 
 from pydantic import SecretStr, field_serializer, field_validator
 
@@ -28,5 +28,5 @@ class LMHash(InfectionMonkeyBaseModel):
         return lm_hash
 
     @field_serializer("lm_hash", when_used="json")
-    def dump_secret(self, v):
+    def dump_secret(self, v) -> Optional[Union[str, bytes]]:
         return get_plaintext(v)
