@@ -72,10 +72,10 @@ class SocketAddress(InfectionMonkeyBaseModel):
 
         return SocketAddress(ip=IPv4Address(ip), port=NetworkPort(port))
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(str(self))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.ip}:{self.port}"
 
 
