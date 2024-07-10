@@ -7,7 +7,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
 
-## [Unreleased]
+## [1.0.0] - 2024-07-09
 ### Added
 - Missing return type hints
 
