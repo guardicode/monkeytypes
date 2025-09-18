@@ -6,6 +6,9 @@ The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
+## 1.1.0 - 2025-09-18
+## Changed
+- Updated version of semver to ^3.0.0
 
 ## [1.0.0] - 2024-07-09
 ### Added
@@ -28,7 +31,6 @@ the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 - Raise explicit TypeErrors when parsing LM/NT hashes
 - Raise clearer errors when parsing identities and secrets
 
-
 ## [0.3.0] - 2023-10-12
 ### Added
 - InfectionMonkeyBaseModel.to_dict()
@@ -41,7 +43,6 @@ the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 ### Changed
 - Upgraded from pydantic v1.x to pydantic v2.x
 - get_secret_value() method to get_plaintext() function
-
 
 ## [0.2.0] - 2023-10-03
 ### Added
