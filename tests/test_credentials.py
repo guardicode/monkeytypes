@@ -46,9 +46,7 @@ def test_credentials_secrets_not_logged(caplog):
         secret=TestSecret(some_secret=sensitive, some_secret_in_bytes=sensitive.encode()),
     )
 
-    logging.getLogger().info(
-        f"{creds.secret.some_secret} and" f" {creds.secret.some_secret_in_bytes}"
-    )
+    logging.getLogger().info(f"{creds.secret.some_secret} and {creds.secret.some_secret_in_bytes}")
 
     assert sensitive not in caplog.text
 
@@ -81,7 +79,10 @@ def test_get_plain_text(expected, hidden):
 @pytest.mark.parametrize(
     "input_, expected_error_message",
     [
-        ({"identity": {}, "secret": None}, "Invalid identity. Expected username or email address."),
+        (
+            {"identity": {}, "secret": None},
+            "Invalid identity. Expected username or email address.",
+        ),
         (
             {
                 "identity": {
@@ -98,8 +99,8 @@ def test_get_plain_text(expected, hidden):
                 },
                 "secret": None,
             },
-            "Value error, value is not a valid email address: The email address is not valid. "
-            "It must have exactly one @-sign.",
+            "Value error, value is not a valid email address: "
+            "An email address must have an @-sign.",
         ),
         (
             {
@@ -112,12 +113,18 @@ def test_get_plain_text(expected, hidden):
         ),
         (
             {
-                "identity": {"email_address": "test@test.com", "username": "extra field"},
+                "identity": {
+                    "email_address": "test@test.com",
+                    "username": "extra field",
+                },
                 "secret": None,
             },
             "Value error, Extra inputs are not permitted",
         ),
-        ({"identity": {}, "secret": None}, "Invalid identity. Expected username or email address."),
+        (
+            {"identity": {}, "secret": None},
+            "Invalid identity. Expected username or email address.",
+        ),
         (
             {
                 "identity": Password(password="not identity"),
@@ -167,7 +174,10 @@ def test_error_messages__identity(input_, expected_error_message):
         (
             {
                 "identity": None,
-                "secret": {"lm_hash": "299BD128C1101FD6299BD128C1101FD6", "password": "extra"},
+                "secret": {
+                    "lm_hash": "299BD128C1101FD6299BD128C1101FD6",
+                    "password": "extra",
+                },
             },
             "Value error, Extra inputs are not permitted",
         ),
