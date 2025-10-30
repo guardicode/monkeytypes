@@ -33,6 +33,11 @@ MutableInfectionMonkeyModelConfig = ConfigDict(
 
 
 class InfectionMonkeyBaseModel(BaseModel):
+    """
+    Base class for Infection Monkey models.
+
+    Fields are immutable. Any attempt to modify a field will raise an IllegalMutationError.
+    """
     model_config = InfectionMonkeyModelConfig
 
     def __init__(self, **kwargs):
@@ -85,8 +90,9 @@ class InfectionMonkeyBaseModel(BaseModel):
     def to_json(self) -> str:
         return self.model_dump_json(by_alias=True)
 
-    def from_json(self, json_data: Union[str, bytes, bytearray]) -> Self:
-        return self.model_validate_json(json_data)
+    @classmethod
+    def from_json(cls, json_data: Union[str, bytes, bytearray]) -> Self:
+        return cls.model_validate_json(json_data)
 
     # NOTE: The copy() method's signature is incompatible with the the
     #       supertype's definition (BaseModel). However, the supertype's
@@ -101,4 +107,7 @@ class InfectionMonkeyBaseModel(BaseModel):
 
 
 class MutableInfectionMonkeyBaseModel(InfectionMonkeyBaseModel):
+    """
+    Base class for Infection Monkey models, with mutable fields.
+    """
     model_config = MutableInfectionMonkeyModelConfig

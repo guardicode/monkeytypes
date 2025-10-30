@@ -84,13 +84,13 @@ def test_base_model_to_json(methods_model):
     assert methods_model.to_json() == METHODS_JSON
 
 
-def test_base_model_from_json(methods_model):
-    assert methods_model == methods_model.from_json(METHODS_JSON)
+def test_base_model_from_json(methods_model: MethodsModel):
+    assert methods_model == MethodsModel.from_json(METHODS_JSON)
 
 
-def test_base_model_from_json_invalid(methods_model):
+def test_base_model_from_json_invalid():
     with pytest.raises(ValueError):
-        methods_model.from_json(METHODS_NOT_VALID_JSON)
+        MethodsModel.from_json(METHODS_NOT_VALID_JSON)
 
 
 def test_base_model_copy(methods_model):

@@ -6,6 +6,10 @@ The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 the [PEP 440 version scheme](https://peps.python.org/pep-0440/#version-scheme).
 
+## Unreleased
+### Fixed
+- Changed InfectionMonkeyBaseModel.from_json to a classmethod.
+
 ## 1.1.0 - 2025-09-18
 ## Changed
 - Updated version of semver to ^3.0.0
